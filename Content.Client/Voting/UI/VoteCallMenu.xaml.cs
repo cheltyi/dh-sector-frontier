@@ -71,6 +71,10 @@ namespace Content.Client.Voting.UI
             VoteNotTrustedLabel.Text = Loc.GetString("ui-vote-trusted-users-notice", ("timeReq", _cfg.GetCVar(CCVars.VotekickEligibleVoterDeathtime)));
 
             foreach (var voteType in AvailableVoteOptions.Keys) // DH-Tweak start. Изменил перебор, чтобы не крашилось из-за отсутствующего варианта окончания раунда в словаре.
+            {
+                var option = AvailableVoteOptions[voteType];
+                VoteTypeButton.AddItem(Loc.GetString(option.Name), (int)voteType);
+            }
 
             _state.OnStateChanged += OnStateChanged;
             VoteTypeButton.OnItemSelected += VoteTypeSelected;
