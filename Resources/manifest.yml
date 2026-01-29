@@ -1,6 +1,11 @@
+# DH-Tweak: Sector Frontier custom icons and titles
 defaultWindowTitle: Sector Frontier
-windowIconSet: /Textures/_Lua/Logo/icon
-splashLogo: /Textures/_Lua/Logo/logo.png
+windowIconSet: /Textures/_DH/Logo/icon
+splashLogo: /Textures/_DH/Logo/logo.png
+
+# defaultWindowTitle: Sector Frontier
+# windowIconSet: /Textures/_Lua/Logo/icon
+# splashLogo: /Textures/_Lua/Logo/logo.png
 
 # defaultWindowTitle: Sector Frontier
 # windowIconSet: /Textures/_Lua/Logo/christmas_icon
