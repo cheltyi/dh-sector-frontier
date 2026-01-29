@@ -148,3 +148,10 @@
 - Commands:
   - "|"
   - oldhelp
+
+# DH-Tweak-start: Изменены права, чтобы обычные администраторы не могли окончить раунд
+- Flags: HOST
+  Commands:
+    - restart
+    - shutdown
+# DH-Tweak end
