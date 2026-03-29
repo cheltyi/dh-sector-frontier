@@ -512,9 +512,6 @@ uplink-vip-MachineWarpDriveFlatpack-desc = { ent-MachineWarpDriveFlatpack.desc }
 
 # Missing base entity localizations for VIP uplink content
 
-ent-CardBoxNanotrasen = коробка с картами Nanotrasen
-    .desc = { ent-CardBoxSyndicate.desc }
-
 ent-MpplayerDefault = портативный плеер
     .desc = Небольшой портативный музыкальный плеер.
 

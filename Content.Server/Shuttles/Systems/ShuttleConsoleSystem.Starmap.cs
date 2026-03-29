@@ -205,38 +205,27 @@ public sealed partial class ShuttleConsoleSystem
                 ftlTime = default;
             }
         }
-        foreach (var sid in new[] { "AsteroidSectorDefault", "MercenarySector", "PirateSector", "TypanSector", "LuaTechSector" })
-        {
-            if (_sectors.TryGetMapId(sid, out var mid))
-            { if (!sectorIdByMap.ContainsKey(mid)) sectorIdByMap[mid] = sid; continue; }
-            if (currentPreset == "LuaAdventure")
-            {
-                string? altId = sid switch
+
+        foreach (var sid in new[] { "AsteroidSectorDefault", "MercenarySector", "PirateSector", "TypanSector", "PrisonSector" }) //DH PrisonSector
+                { if (_sectors.TryGetMapId(sid, out var mid) && !sectorIdByMap.ContainsKey(mid)) sectorIdByMap[mid] = sid; }
+                if (allowCentComStar && _centcomm.CentComMap != MapId.Nullspace)
                 {
-                    "TypanSector" => "TypanSectorLua",
-                    "PirateSector" => "PirateSectorLua",
-                    _ => null
-                };
-                if (altId != null && _sectors.TryGetMapId(altId, out mid) && !sectorIdByMap.ContainsKey(mid)) sectorIdByMap[mid] = altId;
-            }
-        }
-        if (allowCentComStar && _centcomm.CentComMap != MapId.Nullspace)
-        {
-            var frontierIdx = stars.FindIndex(s => s.Map == _ticker.DefaultMap);
-            var ccIdx = stars.FindIndex(s => s.Map == _centcomm.CentComMap);
-            if (frontierIdx >= 0 && ccIdx >= 0)
-            {
-                var a = Math.Min(frontierIdx, ccIdx);
-                var b = Math.Max(frontierIdx, ccIdx);
-                var hasEdge = edges != null && edges.Any(e => (e.A == a && e.B == b) || (e.A == b && e.B == a));
-                if (!hasEdge)
-                {
-                    var edges2 = edges != null ? new List<HyperlaneEdge>(edges) : new List<HyperlaneEdge>();
-                    edges2.Add(new HyperlaneEdge(a, b));
-                    edges = edges2;
+                    var frontierIdx = stars.FindIndex(s => s.Map == _ticker.DefaultMap);
+                    var ccIdx = stars.FindIndex(s => s.Map == _centcomm.CentComMap);
+                    if (frontierIdx >= 0 && ccIdx >= 0)
+                    {
+                        var a = Math.Min(frontierIdx, ccIdx);
+                        var b = Math.Max(frontierIdx, ccIdx);
+                        var hasEdge = edges != null && edges.Any(e => (e.A == a && e.B == b) || (e.A == b && e.B == a));
+                        if (!hasEdge)
+                        {
+                            var edges2 = edges != null ? new List<HyperlaneEdge>(edges) : new List<HyperlaneEdge>();
+                            edges2.Add(new HyperlaneEdge(a, b));
+                            edges = edges2;
+                        }
+                    }
                 }
-            }
-        }
+
         var ownerByMap = new Dictionary<MapId, string>();
         var colorOverrides = new Dictionary<MapId, string>();
         try

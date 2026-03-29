@@ -125,17 +125,20 @@ public sealed class SectorStarMapSystem : EntitySystem
                     sectorStars.Add(star);
                 }
             }
-            var luaTechMapId = _sectorSystem.TryGetMapId("LuaTechSector", out var luaTechMap) ? luaTechMap : MapId.Nullspace;
-            if (luaTechMapId != MapId.Nullspace)
+
+            //DH PrisonSector
+            var prisonMapId = _sectorSystem.TryGetMapId("PrisonSector", out var prisonMap) ? prisonMap : MapId.Nullspace;
+            if (prisonMapId != MapId.Nullspace)
             {
-                if (TryGetConfiguredPosition("LuaTechSector", out var position))
+                if (TryGetConfiguredPosition("PrisonSector", out var position))
                 {
-                    var display = GetMapEntityName(luaTechMapId) ?? "LuaTech Sector";
-                    var star = new Star(position, luaTechMapId, display, Vector2.Zero);
+                    var display = GetMapEntityName(prisonMapId) ?? "Prison Sector";
+                    var star = new Star(position, prisonMapId, display, Vector2.Zero);
                     sectorStars.Add(star);
                 }
             }
         }
+        //DH
         catch { }
         return sectorStars;
     }
@@ -224,6 +227,14 @@ public sealed class SectorStarMapSystem : EntitySystem
         }
         catch (Exception ex)
         { info.AppendLine($"  Mercenary Sector: ERROR - {ex.Message}"); }
+        //DH PrisonSector
+        try
+        {
+            var prisonMapId = _sectorSystem.TryGetMapId("PrisonSector", out var prisonMap) ? prisonMap : MapId.Nullspace;
+            info.AppendLine($"  Prison Sector: {prisonMapId}");
+        }
+        catch (Exception ex)
+        { info.AppendLine($"  Prison Sector: ERROR - {ex.Message}"); }
         try
         {
             var pirateMapId = _sectorSystem.TryGetMapId("PirateSector", out var pirateMap) ? pirateMap : MapId.Nullspace;
