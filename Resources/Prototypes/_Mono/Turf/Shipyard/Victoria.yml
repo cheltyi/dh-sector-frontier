@@ -1,0 +1,45 @@
+# Author Info
+# GitHub: Daunter131
+# Discord: Daunter
+
+# Shuttle Notes:
+#
+- type: vessel
+  id: Victoria
+  parent: BaseVessel
+  name: Victoria
+  description: A reworked hull from an unknown salvage ship manufacturer refitted for xenoarcheology that still holds onto some of its mining and salvaging capabilities.
+  price: 450000 # DH-Tweak
+  category: Medium
+  group: Shipyard
+  shuttlePath: /Maps/_Mono/Shuttles/Victoria.yml
+  guidebookPage: null
+  whitelist:
+  - Luna
+  - Frontier
+  class:
+  - Civilian
+  - Science
+  - Salvage
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Victoria
+  mapName: 'Victoria'
+  mapPath: /Maps/_Mono/Shuttles/Victoria.yml
+  minPlayers: 0
+  stations:
+    Victoria:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Victoria {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]

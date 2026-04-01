@@ -1,0 +1,44 @@
+# Author Info
+# GitHub: Redrover1760
+# Discord: GnarlySheep
+
+- type: vessel
+  id: Tarantula
+  parent: BaseVesselAntag
+  name: Tarantula
+  description: Хорошо бронированный шаттл с парой легких пулеметов. Предназначен для защиты более легких шаттлов второй линии
+  limit: 2
+  price: 647142 # DH-Tweak
+  category: Medium
+  group: Security
+  access: Security
+  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/tarantula.yml
+  guidebookPage: Null
+  whitelist:
+  - Luna
+  - Frontier
+  class:
+  - Patrol
+  - Pursuit
+  - Nfsd
+  engine:
+  - AME
+
+- type: gameMap
+  id: Tarantula
+  mapName: 'Tarantula'
+  mapPath: /Maps/_Mono/Shuttles/Nfsd/tarantula.yml
+  minPlayers: 0
+  stations:
+    Tarantula:
+      stationProto: StandardFrontierSecurityVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Tarantula {1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Deputy: [ 0, 0 ]
+

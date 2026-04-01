@@ -1,0 +1,30 @@
+- type: vessel
+  id: Drakon
+  parent: BaseVesselAntag
+  name: Drakon
+  description: A fast brawler with heavy armor and ballistic armaments.
+  price: 700333 # 2000 above min # DH-Tweak
+  category: Large
+  group: Custom
+  access: USSP
+  shuttlePath: /Maps/_Mono/Shuttles/USSP/drakon.yml
+  guidebookPage: Null
+  class:
+  - Pursuit
+  engine:
+  - AME
+
+- type: gameMap
+  id: Drakon
+  mapName: 'Drakon'
+  mapPath: /Maps/_Mono/Shuttles/USSP/drakon.yml
+  minPlayers: 0
+  stations:
+    Drakon:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Drakon {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'

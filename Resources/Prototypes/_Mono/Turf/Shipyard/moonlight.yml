@@ -1,0 +1,48 @@
+# Author Info
+# GitHub: starch70
+# Discord: _starch_
+
+# Shuttle Notes:
+#
+#
+
+- type: vessel
+  id: Moonlight
+  parent: BaseVessel
+  name: Moonlight
+  description: A (relatively) luxurious ship with botanical and kitchen equipment. Why is this even in this sector? Who knows.
+  limit: 2
+  price: 350000 # DH-Tweak
+  category: Large
+  group: Shipyard
+  shuttlePath: /Maps/_Mono/Shuttles/moonlight.yml
+  guidebookPage: null
+  whitelist:
+  - Luna
+  - Frontier
+  class:
+  - Civilian
+  - Kitchen
+  - Botany
+  engine:
+  - AME
+
+- type: gameMap
+  id: Moonlight
+  mapName: 'Moonlight'
+  mapPath: /Maps/_Mono/Shuttles/moonlight.yml
+  minPlayers: 0
+  stations:
+    Moonlight:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Moonlight {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]

@@ -1,0 +1,37 @@
+# Creator Info
+# Discord: daeqa1us_
+# Cikey: wh1te
+
+- type: vessel
+  id: Lunar
+  parent: BaseVesselAntag
+  name: Lunar
+  description: Небольшой штурмовик обладающий отличной мобильностью.
+  price: 270000 # DH-Tweak
+  category: medium
+  group: Typan
+  access: SyndicateAgent
+  shuttlePath: /Maps/_Lua/Shuttles/Typan/Lunar-MKver.yml
+  guidebookPage: Null
+  whitelist:
+  - Luna
+  - Frontier
+  class:
+  - Syndicate
+  engine:
+  - Bananium
+
+- type: gameMap
+  id: Lunar
+  mapName: 'Lunar'
+  mapPath: /Maps/_Lua/Shuttles/Typan/Lunar-MKver.yml
+  minPlayers: 0
+  stations:
+    Lunar:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Lunar {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'

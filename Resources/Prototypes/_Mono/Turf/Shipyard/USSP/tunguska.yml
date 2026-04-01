@@ -1,0 +1,32 @@
+- type: vessel
+  id: Tunguska
+  parent: BaseVesselAntag
+  name: Tunguska
+  description: A refitted Seraphim with as many guns as it could sustain. Prepare for a onslaught of autocannon fire.
+  limit: 1
+  price: 601700 #215700 # DH-Tweak
+  category: Large
+  group: Custom
+  access: USSP
+  shuttlePath: /Maps/_Mono/Shuttles/USSP/tunguska.yml
+  guidebookPage: Null
+  class:
+  - Patrol
+  - Capital
+  engine:
+  - AME
+
+- type: gameMap
+  id: Tunguska
+  mapName: 'Tunguska'
+  mapPath: /Maps/_Mono/Shuttles/USSP/tunguska.yml
+  minPlayers: 0
+  stations:
+    Tunguska:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Tunguska {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'

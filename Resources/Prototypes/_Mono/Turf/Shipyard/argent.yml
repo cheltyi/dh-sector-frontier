@@ -1,0 +1,44 @@
+# Author Info
+# GitHub: starch70
+# Discord: _starch_
+
+# Shuttle Notes:
+#
+- type: vessel
+  id: Argent
+  parent: BaseVessel
+  name: Argent
+  description: A retired frigate gutted out and refurbished for cargo transport.
+  price: 290259 # DH-Tweak
+  category: Large
+  group: Shipyard
+  shuttlePath: /Maps/_Mono/Shuttles/argent.yml
+  guidebookPage: ShipyardArgent
+  whitelist:
+  - Luna
+  - Frontier
+  class:
+  - Civilian
+  - Cargo
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Argent
+  mapName: 'Argent'
+  mapPath: /Maps/_Mono/Shuttles/argent.yml
+  minPlayers: 0
+  stations:
+    Argent:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Argent {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]

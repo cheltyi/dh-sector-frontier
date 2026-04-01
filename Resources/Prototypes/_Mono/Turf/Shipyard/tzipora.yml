@@ -1,0 +1,46 @@
+# Author Info
+# GitHub: starch70
+# Discord: _starch_
+
+# Shuttle Notes:
+#
+- type: vessel
+  id: Tzipora
+  parent: BaseVessel
+  name: Tzipora
+  description: A advanced medical ship, outfitted with cryo, chem, and surgical capabilities.
+  limit: 2
+  price: 700000 # DH-Tweak
+  category: Large
+  group: Medical
+  shuttlePath: /Maps/_Mono/Shuttles/tzipora.yml
+  guidebookPage: null
+  whitelist:
+  - Luna
+  - Frontier
+  class:
+  - Civilian
+  - Medical
+  - Chemistry
+  engine:
+  - AME
+
+- type: gameMap
+  id: Tzipora
+  mapName: 'Tzipora'
+  mapPath: /Maps/_Mono/Shuttles/tzipora.yml
+  minPlayers: 0
+  stations:
+    Tzipora:
+      stationProto: StandardFrontierExpeditionVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Tzipora {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]
