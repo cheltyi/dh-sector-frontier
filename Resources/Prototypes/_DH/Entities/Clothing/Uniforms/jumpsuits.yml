@@ -1,0 +1,34 @@
+# Гарнизон
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGarrisonCadet # комбинезон кадета гарнизона
+  name: garrison cadet jumpsuit
+  description: A red jumpsuit with a black collar, nothing extra for a new employee.
+  components:
+  - type: Sprite
+    sprite: _DH/Clothing/Uniforms/Jumpsuit/Garrison/garrison_cadet.rsi
+  - type: Clothing
+    sprite: _DH/Clothing/Uniforms/Jumpsuit/Garrison/garrison_cadet.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGarrisonOfficer # комбинезон офицера гарнизона
+  name: garrison officer jumpsuit
+  description: A more attractive variation of the jumpsuit for officers.
+  components:
+  - type: Sprite
+    sprite: _DH/Clothing/Uniforms/Jumpsuit/Garrison/garrison_officer.rsi
+  - type: Clothing
+    sprite: _DH/Clothing/Uniforms/Jumpsuit/Garrison/garrison_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGarrisonCommand # комбинезон начальника гарнизона
+  name: garrison command jumpsuit
+  description: The best version of yourself with a gold chain for the most confident bosses.
+  # 
+  components:
+  - type: Sprite
+    sprite: _DH/Clothing/Uniforms/Jumpsuit/Garrison/garrison_command.rsi
+  - type: Clothing
+    sprite: _DH/Clothing/Uniforms/Jumpsuit/Garrison/garrison_command.rsi

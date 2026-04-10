@@ -1,0 +1,21 @@
+# Гарнизон
+- type: entity 
+  parent: ClothingHeadBase
+  id: ClothingHeadHatGarrisonCommandcap # фуражка начальника гарнизона
+  name: garrison command cap
+  description: A luxurious hat for the garrison command.
+  components:
+  - type: Sprite
+    sprite: _DH/Clothing/Head/Hats/garrison_commandcap.rsi
+  - type: Clothing
+    sprite: _DH/Clothing/Head/Hats/garrison_commandcap.rsi
+  - type: Item
+    sprite: _DH/Clothing/Head/Hats/garrison_commandcap.rsi
+  - type: Tag
+    tags:
+    - PetWearable
+    - CorgiWearable
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
+    - HamsterWearable
