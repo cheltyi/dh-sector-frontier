@@ -10,7 +10,7 @@ ent-ClothingHeadHatGarrisonOfficercap = фуражка офицера гарни
 ent-ClothingHeadHatBeretGarrisonCommand = берет начальника гарнизона
     .desc = Роскошный берет для начальника гарнизона.
 
-ent-ClothingHeadHatBeretGarrisonEngeneer = берет боевого инжинера гарнизона
+ent-ClothingHeadHatBeretGarrisonEngeneer = берет боевого инженера гарнизона
     .desc = Он показывает ваше умение собирать термоядерный реактор из подручных средств на поле боя.
 
 ent-ClothingHeadHatBeretGarrisonMedic = берет полевого медика гарнизона   

@@ -9,7 +9,7 @@
   - type: Sprite
     sprite: _DH/Clothing/Head/Hats/Garrison/garrison_command_cap.rsi
   - type: Clothing
-    sprite: DH/Clothing/Head/Hats/Garrison/garrison_command_cap.rsi
+    sprite: _DH/Clothing/Head/Hats/Garrison/garrison_command_cap.rsi
   - type: Tag
     tags:
     - PetWearable
@@ -28,7 +28,7 @@
   - type: Sprite
     sprite: _DH/Clothing/Head/Hats/Garrison/garrison_officer_cap.rsi
   - type: Clothing
-    sprite: DH/Clothing/Head/Hats/Garrison/garrison_officer_cap.rsi
+    sprite: _DH/Clothing/Head/Hats/Garrison/garrison_officer_cap.rsi
   - type: Tag
     tags:
     - PetWearable
@@ -48,7 +48,7 @@
   - type: Sprite
     sprite: _DH/Clothing/Head/Hats/Garrison/beret_garrison_command.rsi
   - type: Clothing
-    sprite: DH/Clothing/Head/Hats/Garrison/beret_garrison_command.rsi
+    sprite: _DH/Clothing/Head/Hats/Garrison/beret_garrison_command.rsi
   - type: Tag
     tags:
     - PetWearable
@@ -59,14 +59,14 @@
 
 - type: entity 
   parent: ClothingHeadBase
-  id: ClothingHeadHatBeretGarrisonEngeneer # берет боевого инжинера гарнизона
+  id: ClothingHeadHatBeretGarrisonEngeneer # берет боевого инженера гарнизона
   name: beret engeneer garrison
   description: It demonstrates your ability to assemble a thermonuclear reactor from improvised means on the battlefield.
   components:
   - type: Sprite
     sprite: _DH/Clothing/Head/Hats/Garrison/beret_garrison_engeneer.rsi
   - type: Clothing
-    sprite: DH/Clothing/Head/Hats/Garrison/beret_garrison_engeneer.rsi
+    sprite: _DH/Clothing/Head/Hats/Garrison/beret_garrison_engeneer.rsi
   - type: Tag
     tags:
     - PetWearable
@@ -84,7 +84,7 @@
   - type: Sprite
     sprite: _DH/Clothing/Head/Hats/Garrison/beret_garrison_medic.rsi
   - type: Clothing
-    sprite: DH/Clothing/Head/Hats/Garrison/beret_garrison_medic.rsi
+    sprite: _DH/Clothing/Head/Hats/Garrison/beret_garrison_medic.rsi
   - type: Tag
     tags:
     - PetWearable
@@ -102,7 +102,7 @@
   - type: Sprite
     sprite: _DH/Clothing/Head/Hats/Garrison/beret_garrison_officer.rsi
   - type: Clothing
-    sprite: DH/Clothing/Head/Hats/Garrison/beret_garrison_officer.rsi
+    sprite: _DH/Clothing/Head/Hats/Garrison/beret_garrison_officer.rsi
   - type: Tag
     tags:
     - PetWearable
@@ -120,7 +120,7 @@
   - type: Sprite
     sprite: _DH/Clothing/Head/Hats/Garrison/beret_garrison_solder.rsi
   - type: Clothing
-    sprite: DH/Clothing/Head/Hats/Garrison/beret_garrison_solder.rsi
+    sprite: _DH/Clothing/Head/Hats/Garrison/beret_garrison_solder.rsi
   - type: Tag
     tags:
     - PetWearable
