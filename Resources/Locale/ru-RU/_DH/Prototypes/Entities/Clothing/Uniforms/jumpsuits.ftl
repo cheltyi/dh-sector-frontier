@@ -1,6 +1,9 @@
 # Гарнизон
-ent-ClothingUniformJumpsuitGarrisonCadet = комбинезон кадета гарнизона
-    .desc = Красный комбинезон с черным воротником, ничего особенного для нового сотрудника.
+ent-ClothingUniformJumpsuitGarrisonRecruit = комбинезон рекрута гарнизона
+    .desc = Самый непримечательный комбинезон для новичков.
+
+ent-ClothingUniformJumpsuitGarrisonSolder = комбинезон солдата гарнизона
+    .desc = Красный комбинезон с черным воротником и защитой, ничего особенного для расходного материала.
 
 ent-ClothingUniformJumpsuitGarrisonOfficer = комбинезон офицера гарнизона
     .desc = Более красивая вариация комбинезона для офицеров.
