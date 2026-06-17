@@ -250,15 +250,19 @@ namespace Content.Shared.VendingMachines
         // End Frontier: taxes, cash slot
     }
 
-    [Serializable, NetSerializable]
-    public sealed class VendingMachineInventoryEntry
+    [Serializable, NetSerializable, DataDefinition]
+    public sealed partial class VendingMachineInventoryEntry
     {
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public InventoryType Type;
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string ID;
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public string ID = string.Empty;
+        [DataField]
         public uint Amount;
+
+        // Parameterless ctor required so the data-definition instantiator can construct the entry on load.
+        public VendingMachineInventoryEntry() { }
+
         public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
         {
             Type = type;

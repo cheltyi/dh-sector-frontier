@@ -2,11 +2,16 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.StationRecords;
 
-[Serializable, NetSerializable]
-public sealed class StationRecordsFilter
+[Serializable, NetSerializable, DataDefinition]
+public sealed partial class StationRecordsFilter
 {
+    [DataField]
     public StationRecordFilterType Type = StationRecordFilterType.Name;
+    [DataField]
     public string Value  = "";
+
+    // Parameterless ctor required so the data-definition instantiator can construct the filter on load.
+    public StationRecordsFilter() { }
 
     public StationRecordsFilter(StationRecordFilterType filterType, string newValue = "")
     {

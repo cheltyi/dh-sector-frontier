@@ -8,22 +8,24 @@ public abstract class SharedNewsSystem : EntitySystem
     public const int MaxContentLength = 2048;
 }
 
-[Serializable, NetSerializable]
-public struct NewsArticle
+[Serializable, NetSerializable, DataDefinition]
+public partial struct NewsArticle
 {
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string Title;
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string Content;
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? Author;
 
+    // Runtime-only cross-references: a value-tuple element type has no data definition, so this stays a
+    // plain field (NOT a [DataField]) — otherwise YAML-serializing the article would crash the save.
     [ViewVariables]
     public ICollection<(NetEntity, uint)>? AuthorStationRecordKeyIds;
 
-    [ViewVariables]
+    [DataField]
     public TimeSpan ShareTime;
 }
 
