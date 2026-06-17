@@ -103,20 +103,6 @@ public sealed partial class CCVars
         PersistenceMap = CVarDef.Create("game.persistencemap", "Empty", CVar.ARCHIVE);
 
     /// <summary>
-    ///     Frontier persistence (session-save): controls whether the world is periodically autosaved
-    ///     to the <see cref="GameMap"/> persistence path so it survives a server restart.
-    ///     Only meaningful together with <see cref="UsePersistence"/>.
-    /// </summary>
-    public static readonly CVarDef<bool>
-        AutoSaveEnabled = CVarDef.Create("game.autosaveenabled", true, CVar.ARCHIVE);
-
-    /// <summary>
-    ///     Frontier persistence (session-save): how frequently the autosave should happen, in minutes.
-    /// </summary>
-    public static readonly CVarDef<int>
-        AutoSaveInterval = CVarDef.Create("game.autosaveinterval", 60, CVar.ARCHIVE);
-
-    /// <summary>
     ///     Prototype to use for map pool.
     /// </summary>
     public static readonly CVarDef<string>

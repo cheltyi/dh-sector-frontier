@@ -59,12 +59,6 @@ namespace Content.Server.GameTicking
 
         private string? _replayRoundText;
 
-        // Frontier persistence (session-save): accumulator toward the next autosave.
-        private TimeSpan _timeToNextSave = TimeSpan.Zero;
-
-        // Frontier persistence (session-save): staged autosave-warning countdown (3 = no warnings sent yet).
-        private int _warnings = 3;
-
         [ViewVariables]
         public GameRunLevel RunLevel
         {
@@ -156,38 +150,6 @@ namespace Content.Server.GameTicking
                 if (i == 0)
                     DefaultMap = mapId;
             }
-
-            // Lua persistence: additively restore secondary Lua sector maps from the sibling save (if any),
-            // before RoundStartingEvent triggers SectorSystem to generate fresh ones.
-            RestoreSectors();
-        }
-
-        // Frontier persistence (session-save): writes the current sector map (DefaultMap) to the
-        // persistence save path (the game.map CCVar) that GameMapManager loads from on startup when
-        // game.usepersistence is enabled. This is the automatic counterpart to the `persistencesave`
-        // admin command — together with the existing load-on-start path it makes the world survive a
-        // server restart.
-        private void SaveMaps()
-        {
-            var savePath = _cfg.GetCVar(CCVars.GameMap);
-            if (string.IsNullOrWhiteSpace(savePath))
-            {
-                _adminLogger.Add(LogType.EventRan, LogImpact.Medium,
-                    $"Persistence autosave skipped: the game.map save path is empty.");
-                return;
-            }
-
-            _map.SetPaused(DefaultMap, true);
-            var start = _gameTiming.CurTime;
-            var saveStat = _loader.TrySaveMap(DefaultMap, new ResPath(savePath));
-            var end = _gameTiming.CurTime;
-            _adminLogger.Add(LogType.EventRan, LogImpact.Extreme,
-                $"MAP SAVE STATUS: {saveStat} TIME TAKEN: {(end - start).TotalSeconds}");
-            _map.SetPaused(DefaultMap, false);
-
-            // Lua persistence: also persist secondary Lua sector maps (and the shuttles/stations on them)
-            // to a sibling file, so player ships left in other sectors survive a restart too.
-            SaveSectorMaps(savePath);
         }
 
         public PreGameMapLoad RaisePreLoad(
@@ -814,47 +776,6 @@ namespace Content.Server.GameTicking
             if (RunLevel == GameRunLevel.InRound)
             {
                 RoundLengthMetric.Inc(frameTime);
-
-                // Frontier persistence (session-save): periodic autosave with staged chat warnings.
-                // Gated on game.usepersistence so it only writes when the save is actually loaded on
-                // startup (feeding the existing GameMapManager persistence path), and on
-                // game.autosaveenabled so operators can disable it.
-                if (_cfg.GetCVar(CCVars.UsePersistence) && _cfg.GetCVar(CCVars.AutoSaveEnabled))
-                {
-                    _timeToNextSave += TimeSpan.FromSeconds(frameTime);
-                    var interval = _cfg.GetCVar(CCVars.AutoSaveInterval);
-                    if (_warnings == 3)
-                    {
-                        if (_timeToNextSave > TimeSpan.FromMinutes(interval - 5))
-                        {
-                            _warnings--;
-                            SendServerMessage(Loc.GetString("persistence-autosave-warn-5min"));
-                        }
-                    }
-                    else if (_warnings == 2)
-                    {
-                        if (_timeToNextSave > TimeSpan.FromMinutes(interval - 1))
-                        {
-                            _warnings--;
-                            SendServerMessage(Loc.GetString("persistence-autosave-warn-1min"));
-                        }
-                    }
-                    else if (_warnings == 1)
-                    {
-                        if (_timeToNextSave > TimeSpan.FromMinutes(interval) - TimeSpan.FromSeconds(3))
-                        {
-                            _warnings--;
-                            SendServerMessage(Loc.GetString("persistence-autosave-saving"));
-                        }
-                    }
-                    if (_timeToNextSave > TimeSpan.FromMinutes(interval))
-                    {
-                        _timeToNextSave = TimeSpan.Zero;
-                        _warnings = 3;
-                        SaveMaps();
-                        SendServerMessage(Loc.GetString("persistence-autosave-saved"));
-                    }
-                }
             }
 
             if (_roundStartTime == TimeSpan.Zero ||

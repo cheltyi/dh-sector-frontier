@@ -125,52 +125,6 @@ public sealed class SectorSystem : EntitySystem
         return false;
     }
 
-    /// <summary>
-    /// Lua persistence: re-register a sector map that was restored from the whole-world save (loaded via
-    /// generic deserialization, which bypasses <see cref="EnsureSector"/>). Does only the non-map-creating
-    /// wiring: registers the instance into <see cref="_instances"/> (so Starmap/FTL-by-id/AiShuttle resolve
-    /// the sector) and re-applies the sector name. Map-level components (FTL destination, parallax, atmos),
-    /// POI grids and station entities are already serialized on/with the map, so they are not recreated.
-    /// After this runs, the ContainsKey guard in <see cref="EnsureSector"/> makes the RoundStarting
-    /// auto-start loop a no-op for this config, preventing duplicate sectors. Returns false if the config is
-    /// unknown or the sector is already registered.
-    /// </summary>
-    public bool RestoreSectorInstance(string configId, MapId mapId, EntityUid mapUid)
-    {
-        if (_instances.ContainsKey(configId))
-            return false;
-        if (!_protos.TryIndex<SectorSystemPrototype>(configId, out var cfg))
-        {
-            Log.Error($"[SectorSystem] RestoreSectorInstance: config '{configId}' not found");
-            return false;
-        }
-
-        // Resolve the sector's main station grid by matching BecomesStationComponent.Id against the sector's
-        // station prototype (POI grids carry their own ids and are skipped here).
-        var stationProto = _protos.Index<GameMapPrototype>(cfg.Station);
-        var stationGrid = EntityUid.Invalid;
-        var children = Transform(mapUid).ChildEnumerator;
-        while (children.MoveNext(out var child))
-        {
-            if (TryComp<BecomesStationComponent>(child, out var becomes) && stationProto.Stations.ContainsKey(becomes.Id))
-            {
-                stationGrid = child;
-                break;
-            }
-        }
-
-        _meta.SetEntityName(mapUid, cfg.Name);
-        _instances[configId] = new SectorInstance
-        {
-            Config = cfg,
-            MapId = mapId,
-            MapUid = mapUid,
-            StationGrid = stationGrid
-        };
-        Log.Info($"[SectorSystem] RestoreSectorInstance id='{configId}' map='{mapId}' stationGrid='{stationGrid}'");
-        return true;
-    }
-
     public void EnsureSector(string configId)
     {
         if (_instances.ContainsKey(configId)) return;
@@ -192,9 +146,6 @@ public sealed class SectorSystem : EntitySystem
         var stationGrid = _ticker.MergeGameMap(_protos.Index<GameMapPrototype>(cfg.Station), mapId, opts).FirstOrNull(HasComp<BecomesStationComponent>)!.Value;
         _meta.SetEntityName(mapUid, cfg.Name);
         EnsureComp<SectorAtmosSupportComponent>(mapUid);
-        // Lua persistence: stamp the SAVED marker so whole-world persistence can collect this sector map
-        // and re-identify it (by ConfigId) after a generic load assigns it a fresh MapId.
-        EnsureComp<PersistentSectorMapComponent>(mapUid).ConfigId = configId;
         if (stationGrid.IsValid())
         {
             EnsureComp<StationSectorServiceHostComponent>(stationGrid);
