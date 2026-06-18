@@ -33,6 +33,14 @@ public sealed partial class ShuttleConsoleSystem
 
     private void OnConsoleDiskInserted(EntityUid uid, ShuttleConsoleComponent component, EntInsertedIntoContainerMessage args) // Lua
     {
+        // Dark Haven: forward autopilot board changes (cannot add a second subscription to this event).
+        if (args.Container.ID == "autopilot_slot")
+        {
+            var ev = new Content.Shared._DH.Shuttles.Events.AutopilotBoardChangedEvent();
+            RaiseLocalEvent(uid, ref ev);
+            return;
+        }
+        // End Dark Haven
         if (args.Container.ID != "disk_slot") return;
         try
         {
@@ -48,6 +56,14 @@ public sealed partial class ShuttleConsoleSystem
 
     private void OnConsoleDiskRemoved(EntityUid uid, ShuttleConsoleComponent component, EntRemovedFromContainerMessage args) // Lua
     {
+        // Dark Haven: forward autopilot board changes (cannot add a second subscription to this event).
+        if (args.Container.ID == "autopilot_slot")
+        {
+            var ev = new Content.Shared._DH.Shuttles.Events.AutopilotBoardChangedEvent();
+            RaiseLocalEvent(uid, ref ev);
+            return;
+        }
+        // End Dark Haven
         if (args.Container.ID != "disk_slot") return;
         try
         {

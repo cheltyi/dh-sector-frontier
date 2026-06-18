@@ -22,8 +22,14 @@ public sealed partial class StationAiCoreComponent : Component
 
     /// <summary>
     /// The invisible eye entity being used to look around.
+    /// Transient runtime entity (StationAiHolo, DoNotMap) re-spawned by SetupEye, so it must NOT be serialized:
+    /// a saved uid dangles on map save (logs "missing entity") and on load deserializes as EntityUid.Invalid
+    /// (which is NOT null), making SetupEye's "if (RemoteEntity != null) return false" short-circuit so the eye is
+    /// never re-created, leaving the AI permanently blind. On load the eye is re-created via PowerChangedEvent
+    /// (OnCorePower -> SetupEye -> AttachEye); MapInitEvent is NOT re-raised for persisted post-init entities.
+    /// Keep [AutoNetworkedField] for client sync.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public EntityUid? RemoteEntity;
 
     /// <summary>

@@ -136,6 +136,32 @@
                     </controls:BoxContainer>
                     <!-- End Frontier - settable target -->
 
+                    <!-- Dark Haven - autopilot -->
+                    <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True" Name="AutopilotBox" Margin="0 3 0 0">
+                        <controls:Label Text="{controls:Loc 'shuttle-console-autopilot'}"/>
+                        <controls:BoxContainer Orientation="Horizontal"
+                                               HorizontalExpand="True"
+                                               Align="Center"
+                                               Margin="0 0 0 3">
+                            <controls:Button Name="BuildRouteButton"
+                                             Text="{controls:Loc 'shuttle-console-build-route'}"
+                                             TextAlign="Center"
+                                             HorizontalExpand="True"
+                                             ToolTip="{controls:Loc 'shuttle-console-build-route-desc'}"
+                                             StyleClasses="OpenRight"
+                                             Margin="0"/>
+                            <controls:Button Name="RouteToggleButton"
+                                             Text="{controls:Loc 'shuttle-console-route-start'}"
+                                             TextAlign="Center"
+                                             ToggleMode="True"
+                                             MinWidth="64"
+                                             ToolTip="{controls:Loc 'shuttle-console-route-toggle-desc'}"
+                                             StyleClasses="OpenLeft"
+                                             Margin="0"/>
+                        </controls:BoxContainer>
+                    </controls:BoxContainer>
+                    <!-- End Dark Haven - autopilot -->
+
                     <!-- Frontier - IFF search -->
                     <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True" Name="IffSearchBox">
                         <controls:Label Text="{controls:Loc 'shuttle-console-iff-search'}"/>

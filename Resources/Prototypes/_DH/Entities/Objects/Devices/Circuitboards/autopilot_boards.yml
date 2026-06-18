@@ -1,0 +1,41 @@
+# Dark Haven - autopilot upgrade boards
+- type: entity
+  parent: BaseItem
+  id: BaseAutopilotUpgradeBoard
+  name: autopilot module
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: cpuboard
+  - type: Item
+    storedRotation: -90
+  - type: StaticPrice
+    price: 200
+
+- type: entity
+  parent: BaseAutopilotUpgradeBoard
+  id: AutopilotUpgradeBoardBasic
+  name: basic autopilot module
+  description: A basic shuttle autopilot board. Flies the ship in a straight line from A to B. Cannot avoid obstacles or dock.
+  components:
+  - type: AutopilotUpgrade
+    tier: 1
+
+- type: entity
+  parent: BaseAutopilotUpgradeBoard
+  id: AutopilotUpgradeBoardImproved
+  name: improved autopilot module
+  description: An improved shuttle autopilot board. Plots a smart path around obstacles, accounting for the ship's size. Cannot dock.
+  components:
+  - type: AutopilotUpgrade
+    tier: 2
+
+- type: entity
+  parent: BaseAutopilotUpgradeBoard
+  id: AutopilotUpgradeBoardAdvanced
+  name: advanced autopilot module
+  description: An advanced shuttle autopilot board. Plots a smart path around obstacles and can automatically dock to a selected airlock.
+  components:
+  - type: AutopilotUpgrade
+    tier: 3

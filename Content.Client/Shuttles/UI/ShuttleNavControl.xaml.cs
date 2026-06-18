@@ -708,6 +708,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             }
         }
 
+        DhDrawAutopilot(handle, worldToShuttle, shuttleToView); // Dark Haven - autopilot route/marker
+
         #region Mono
         // Draw radar line
         // First, figure out which angle to draw.

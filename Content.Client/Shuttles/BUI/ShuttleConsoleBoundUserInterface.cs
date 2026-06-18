@@ -33,6 +33,7 @@ public sealed partial class ShuttleConsoleBoundUserInterface : BoundUserInterfac
         _window.ToggleFTLLockRequest += OnToggleFTLLockRequest;
         _window.OnStarMapVisibilityChanged += visible => SendMessage(new ShuttleConsoleStarMapVisibilityMessage(visible));
         NfOpen(); // Frontier
+        DhOpen(); // Dark Haven - autopilot
     }
 
     private void OnToggleFTLLockRequest(List<NetEntity> dockEntities, bool enabled)

@@ -12,8 +12,11 @@ namespace Content.Server._NF.Salvage;
 [RegisterComponent]
 public sealed partial class NFSalvageMobRestrictionsComponent : Component
 {
+    // Nullable so the (default, unset) value is never written: a non-nullable EntityUid defaulting to Invalid is
+    // serialized as an "invalid" reference and logs [ERRO] Encountered an invalid entityUid reference. on world save.
+    // Set to the parent grid in SalvageMobRestrictionsSystem.OnInit (left unset on the "spawned improperly" path).
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public EntityUid LinkedGridEntity = EntityUid.Invalid;
+    public EntityUid? LinkedGridEntity;
 
     /// <summary>
     /// If set to false, this mob will not be despawned when its linked entity is despawned.

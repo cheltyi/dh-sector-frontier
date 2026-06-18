@@ -18,8 +18,10 @@ public sealed partial class GCAbleObjectComponent : Component
     [DataField("queue", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<GCQueuePrototype>))]
     public string Queue = default!;
 
+    // Nullable so the (default, unset) value is never written: a non-nullable EntityUid defaulting to Invalid is
+    // serialized as an "invalid" reference and logs [ERRO] Encountered an invalid entityUid reference. on world save.
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField("linkedGridEntity")]
-    public EntityUid LinkedGridEntity = EntityUid.Invalid;
+    public EntityUid? LinkedGridEntity;
 }
 
