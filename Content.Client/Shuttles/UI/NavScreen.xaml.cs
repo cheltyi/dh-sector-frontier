@@ -43,6 +43,7 @@ public sealed partial class NavScreen : BoxContainer
         DockToggle.Pressed = NavRadar.ShowDocks;
 
         NfInitialize(); // Frontier Initialization for the NavScreen
+        DhInitialize(); // Dark Haven - autopilot
     }
 
     // Frontier - IFF search
@@ -122,6 +123,7 @@ public sealed partial class NavScreen : BoxContainer
         UpdateNetworkPortButtonNames(scc.NetworkPortNames);
 
         NfUpdateState(scc); // Frontier Update State
+        DhUpdateState(scc); // Dark Haven - autopilot
     }
 
     /// <summary>
@@ -169,6 +171,8 @@ public sealed partial class NavScreen : BoxContainer
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
+
+        DhFrameUpdate(); // Dark Haven - autopilot button state
 
         _hudUpdateAccum += args.DeltaSeconds;
         if (_hudUpdateAccum < HudUpdateInterval) return;

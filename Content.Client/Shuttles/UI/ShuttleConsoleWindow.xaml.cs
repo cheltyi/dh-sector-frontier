@@ -94,6 +94,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         };
 
         NfInitialize(); // Frontier Initialization for the ShuttleConsoleWindow
+        DhInitialize(); // Dark Haven - autopilot
     }
 
     private void ClearModes(ShuttleConsoleMode mode)

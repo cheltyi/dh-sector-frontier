@@ -167,11 +167,21 @@
         whitelist:
           components:
           - ShuttleDestinationCoordinates
+      autopilot_slot: # Dark Haven - autopilot upgrade board
+        name: autopilot-slot-name
+        insertSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        ejectSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        whitelist:
+          components:
+          - AutopilotUpgrade
   - type: ContainerContainer
     containers:
       board: !type:Container
         ents: []
       disk_slot: !type:ContainerSlot {}
+      autopilot_slot: !type:ContainerSlot {} # Dark Haven
   - type: GuideHelp
     guides:
     - ShuttleCraft
@@ -212,6 +222,7 @@
       board: !type:Container
         ents: []
       disk_slot: !type:ContainerSlot {}
+      autopilot_slot: !type:ContainerSlot {} # Dark Haven
       key_slots: !type:Container
   - type: ContainerFill
     containers:
