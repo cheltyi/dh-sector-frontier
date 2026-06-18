@@ -147,12 +147,18 @@ namespace Content.Shared.Lathe
     }
 
     // Frontier: batch lathe recipes
-    [Serializable]
+    [Serializable, DataDefinition]
     public sealed partial class LatheRecipeBatch : EntityEventArgs
     {
+        [DataField]
         public ProtoId<LatheRecipePrototype> Recipe;
+        [DataField]
         public int ItemsPrinted;
+        [DataField]
         public int ItemsRequested;
+
+        // Parameterless ctor required so the data-definition instantiator can construct the batch on load.
+        public LatheRecipeBatch() { }
 
         public LatheRecipeBatch(ProtoId<LatheRecipePrototype> recipe, int itemsPrinted, int itemsRequested)
         {

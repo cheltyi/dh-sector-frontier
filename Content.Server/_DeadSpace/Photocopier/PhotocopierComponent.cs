@@ -103,7 +103,9 @@ public sealed partial class PhotocopierComponent : Component
     /// <summary>
     /// Chosen paper form than will be printed
     /// </summary>
-    [DataField]
+    // Runtime selection holding a prototype OBJECT (no data definition) — must not be a [DataField], or
+    // YAML-serializing this component would crash map/grid saves. Use ProtoId if it ever needs to persist.
+    [ViewVariables]
     public PaperworkFormPrototype? ChosenPaper = null;
 
     [ViewVariables]

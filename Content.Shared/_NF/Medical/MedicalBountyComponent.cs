@@ -10,7 +10,10 @@ public sealed partial class MedicalBountyComponent : Component
     /// The bounty to use/used for damage generation.
     /// If null, a medical bounty type will be selected at random.
     /// </summary>
-    [DataField(serverOnly: true)]
+    // Runtime-assigned (picked at random on startup when null). It holds a prototype OBJECT, which has no
+    // data definition and cannot be read from or written to YAML — a [DataField] here would crash map/grid
+    // saves. If this ever needs to persist, store it as ProtoId<MedicalBountyPrototype> and resolve on use.
+    [ViewVariables]
     public MedicalBountyPrototype? Bounty = null;
 
     /// <summary>
