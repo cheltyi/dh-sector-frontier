@@ -10,6 +10,10 @@ namespace Content.Shared.Movement.Components;
 [Access(typeof(SharedMoverController))]
 public sealed partial class RelayInputMoverComponent : Component
 {
-    [DataField, AutoNetworkedField]
+    // Not a [DataField]: RelayEntity is always wired up at runtime via SharedMoverController.SetRelay (EnsureComp)
+    // and reset on relink, so it never holds meaningful persistent state. For the Station AI brain it points at the
+    // transient StationAiHolo eye; serializing it produces a dangling EntityUid reference on map save.
+    // Keep [AutoNetworkedField] for client sync.
+    [AutoNetworkedField]
     public EntityUid RelayEntity;
 }
