@@ -111,3 +111,9 @@ Entries:
       message: автопилот
   id: 9
   time: '2026-06-18T12:00:00.0000000+00:00'
+- author: chvl
+  changes:
+    - type: Fix
+      message: фиксы
+  id: 10
+  time: '2026-06-18T12:00:00.0000000+00:00'
