@@ -245,6 +245,10 @@ public sealed class DrinkSystem : SharedDrinkSystem
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
         _stomach.TryTransferSolution(firstStomach.Value.Owner, drained, firstStomach.Value.Comp1);
 
+        // Dark Haven: tell the bladder need the mob drank (fills it more than food).
+        var dhIngested = new Content.Shared._DH.Needs.IngestedEvent(true);
+        RaiseLocalEvent(args.Target.Value, ref dhIngested);
+
         _forensics.TransferDna(entity, args.Target.Value);
 
         if (!forceDrink && solution.Volume > 0)

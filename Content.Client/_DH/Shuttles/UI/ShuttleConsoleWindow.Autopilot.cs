@@ -15,5 +15,9 @@ public sealed partial class ShuttleConsoleWindow
     {
         NavContainer.OnAutopilotSetTarget += (shuttle, coords, dock) => OnAutopilotSetTarget?.Invoke(shuttle, coords, dock);
         NavContainer.OnAutopilotToggle += (shuttle, enabled) => OnAutopilotToggle?.Invoke(shuttle, enabled);
+
+        // Target picked on the big sector map: forward as a route target (no dock; the resolved shuttle is
+        // looked up server-side from the console, so pass null here).
+        MapContainer.OnAutopilotMapTarget += netCoords => OnAutopilotSetTarget?.Invoke(null, netCoords, null);
     }
 }

@@ -7,6 +7,8 @@ shuttle-console-build-route-desc = Кликните точку на радаре
 shuttle-console-route-start = Старт
 shuttle-console-route-stop = Стоп
 shuttle-console-route-toggle-desc = Включить или выключить автопилот по построенному маршруту.
+shuttle-console-autopilot-map = Цель автопилота
+shuttle-console-autopilot-map-desc = Выберите цель автопилота в любом доступном месте на карте сектора.
 
 # Слот платы
 autopilot-slot-name = Модуль автопилота

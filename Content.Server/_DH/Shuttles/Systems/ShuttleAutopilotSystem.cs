@@ -68,7 +68,8 @@ public sealed partial class ShuttleAutopilotSystem : EntitySystem
     // Flight model: turn the nose toward the target, then fly forward (rear thrusters). The engine caps the
     // speed and cancels sideways drift for us, so this stays a thin layer over the working base.
     private const float ThrustAlignDot = 0.8f;     // start thrusting once within ~37° of the target (turn-then-burn)
-    private const float BrakeLead = 2.0f;          // brake this many seconds of travel before the final goal
+    private const float CoastLead = 5.0f;          // stop thrusting this many seconds of travel out — coast + steer in
+    private const float BrakeLead = 2.5f;          // brake (kill remaining speed) this many seconds of travel out
 
     // Arrival.
     private const float ArriveSpeed = 1.0f;
@@ -407,11 +408,24 @@ public sealed partial class ShuttleAutopilotSystem : EntitySystem
         var dir = dist > 1e-4f ? delta / dist : forward;
         var speed = body.LinearVelocity.Length();
 
-        // Brake to a stop on the final approach.
-        if (isFinal && dist <= MathF.Max(ap.ArriveTolerance, speed * BrakeLead))
+        // Final approach: ease in instead of overshooting. Cut forward thrust well out (coast + steer), then
+        // brake the remaining speed near the goal. Distances scale with speed so faster ships start earlier.
+        if (isFinal)
         {
-            SetButtons(pilot, ShuttleButtons.Brake);
-            return;
+            if (dist <= MathF.Max(ap.ArriveTolerance, speed * BrakeLead))
+            {
+                SetButtons(pilot, ShuttleButtons.Brake);
+                return;
+            }
+
+            if (dist <= MathF.Max(ap.ArriveTolerance, speed * CoastLead))
+            {
+                // Coast: no forward thrust, just keep the nose on the target so the brake is clean.
+                var coast = ShuttleButtons.None;
+                AddYaw(ref coast, forward, dir, body.AngularVelocity);
+                SetButtons(pilot, coast);
+                return;
+            }
         }
 
         var buttons = ShuttleButtons.None;

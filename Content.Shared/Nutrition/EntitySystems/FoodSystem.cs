@@ -268,6 +268,10 @@ public sealed class FoodSystem : EntitySystem
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
         _stomach.TryTransferSolution(stomachToUse!.Value.Owner, split, stomachToUse);
 
+        // Dark Haven: tell the bladder need the mob ate.
+        var dhIngested = new Content.Shared._DH.Needs.IngestedEvent(false);
+        RaiseLocalEvent(args.Target.Value, ref dhIngested);
+
         var flavors = args.FlavorMessage;
 
         if (forceFeed)

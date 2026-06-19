@@ -23,6 +23,7 @@ public sealed partial class ShuttleAutopilotSystem
     private const float PathMaxAxisCells = 110f;   // cap cells per axis (bounds search cost)
     private const float PathDetourPad = 96f;       // world-distance room around the direct line to route around obstacles
     private const int PathMaxCells = 24000;        // hard cap on total cells (defends against huge regions)
+    private const float LongHaulDistance = 450f;   // beyond fine A* reach: fall back to a direct heading (re-planned on approach)
 
     private List<Entity<MapGridComponent>> _pathGrids = new();
 
@@ -119,6 +120,16 @@ public sealed partial class ShuttleAutopilotSystem
         // Docking: even if A* can't find a clear lane to the standoff, still head there directly so the route
         // and the dock marker show and the ship approaches (DriveDock + collision handle the close part).
         if (ap.TargetDock != null)
+        {
+            ap.Route.Add(goal);
+            return true;
+        }
+
+        // Far open-space haul — typically a point picked on the big sector map, well beyond the practical
+        // reach of fine-grained A*. Head straight toward it: obstacle avoidance matters near structures, but
+        // over a long open distance a direct heading is fine, and for tier >= 2 the periodic/stuck re-plan
+        // re-routes with fine A* once we close in on anything in the way.
+        if ((goal - shipPos).Length() > LongHaulDistance)
         {
             ap.Route.Add(goal);
             return true;
