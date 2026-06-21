@@ -52,6 +52,9 @@ public sealed class SectorSystem : EntitySystem
         public EntityUid MapUid;
         public EntityUid StationGrid;
         public readonly List<Vector2> OccupiedPoiCoords = new();
+        // Dark Haven: true when this instance was restored from a persistence save (its worldgen components
+        // and chunk data are already serialized on the map), so OnRoundStart must NOT re-apply worldgen.
+        public bool Restored;
     }
 
     private readonly Dictionary<string, SectorInstance> _instances = new();
@@ -100,6 +103,9 @@ public sealed class SectorSystem : EntitySystem
 
         foreach (var inst in _instances.Values)
         {
+            // Dark Haven: restored sectors already carry their worldgen components + chunk data from the save.
+            // Re-applying would either throw (AddComponent over an existing component) or wipe restored chunks.
+            if (inst.Restored) continue;
             if (inst.Config.WorldgenConfig == null) continue;
             if (!_protos.TryIndex<Content.Server.Worldgen.Prototypes.WorldgenConfigPrototype>(inst.Config.WorldgenConfig, out var cfg)) continue;
             var ser = IoCManager.Resolve<Robust.Shared.Serialization.Manager.ISerializationManager>();
@@ -165,7 +171,8 @@ public sealed class SectorSystem : EntitySystem
             Config = cfg,
             MapId = mapId,
             MapUid = mapUid,
-            StationGrid = stationGrid
+            StationGrid = stationGrid,
+            Restored = true // Dark Haven: skip worldgen re-apply in OnRoundStart for restored sectors
         };
         Log.Info($"[SectorSystem] RestoreSectorInstance id='{configId}' map='{mapId}' stationGrid='{stationGrid}'");
         return true;

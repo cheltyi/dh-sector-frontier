@@ -7,7 +7,10 @@ namespace Content.Server._NF.Power.Components;
 [RegisterComponent]
 public sealed partial class UpgradePowerSupplierComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
+    // Dark Haven: [DataField] so the captured base survives a persistence map save (captured only at MapInit,
+    // which is not re-raised on load; otherwise a later RefreshParts recomputes MaxSupply from 0). See
+    // ThrusterComponent.BaseThrust for the same pattern.
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float BaseSupplyRate;
 
     /// <summary>

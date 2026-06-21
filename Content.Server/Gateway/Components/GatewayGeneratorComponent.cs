@@ -32,7 +32,12 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// <summary>
     /// Maps we've generated.
     /// </summary>
-    [DataField]
+    // Dark Haven: deliberately NOT a [DataField]. These are transient, procedurally-generated expedition MAP
+    // entities that are never persisted. Serializing this list dragged entire expedition maps into the main
+    // sector save (the engine auto-includes referenced maps) and then logged "missing entity" errors for the
+    // gateway structures on them. On load the generator simply starts empty and generates fresh destinations,
+    // so nothing of value is lost; the live list still lives in memory for normal runtime use.
+    [ViewVariables]
     public List<EntityUid> Generated = new();
 
     [DataField]

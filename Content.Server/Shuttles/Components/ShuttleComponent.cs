@@ -5,7 +5,11 @@ namespace Content.Server.Shuttles.Components
     [RegisterComponent]
     public sealed partial class ShuttleComponent : Component
     {
-        [ViewVariables]
+        // Dark Haven - persistence: [DataField] so a grid deliberately disabled (made BodyType.Static, e.g. an
+        // anchored station) round-trips Enabled=false and OnShuttleStartup does NOT re-enable it on load. Without
+        // this an anchored station reloads as a free-floating dynamic grid (and can drift) while its anchor UI
+        // still shows on.
+        [DataField, ViewVariables]
         public bool Enabled = true;
 
         [ViewVariables]

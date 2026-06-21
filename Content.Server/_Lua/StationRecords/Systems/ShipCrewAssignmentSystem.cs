@@ -38,6 +38,32 @@ public sealed class ShipCrewAssignmentSystem : EntitySystem
     public void Assign(EntityUid targetIdCard, EntityUid shuttleUid, string shipName, ShipCrewRole role)
     { TryAssign(targetIdCard, shuttleUid, shipName, role, out _); }
 
+    /// <summary>
+    /// Dark Haven - persistence: crew assignments store the ship GRID uid (cross-grid), which dangles and is
+    /// nulled when the card and the ship are saved to different files. Re-link any assignment whose ShuttleUid was
+    /// lost, matching its stored ShipName against the shipyard's rebuilt full-name -> grid map. Called from the
+    /// shipyard's round-start deed re-resolve so both use the same authoritative grid-side source.
+    /// </summary>
+    public void ReResolveAssignments(Dictionary<string, EntityUid> nameToGrid)
+    {
+        var query = EntityQueryEnumerator<ShipCrewAssignmentComponent>();
+        while (query.MoveNext(out var uid, out var assignment))
+        {
+            if (assignment.ShuttleUid is { Valid: true })
+                continue;
+            if (string.IsNullOrWhiteSpace(assignment.ShipName) || !nameToGrid.TryGetValue(assignment.ShipName, out var grid))
+                continue;
+
+            assignment.ShuttleUid = grid;
+            if (TryComp<ShipCrewAssignmentStatusComponent>(uid, out var status))
+            {
+                status.ShuttleUid = grid;
+                Dirty(uid, status);
+            }
+            UpdateAllPdasContainingId(uid);
+        }
+    }
+
     public int ClearAllForShuttle(EntityUid shuttleUid)
     {
         var toClear = new List<EntityUid>();

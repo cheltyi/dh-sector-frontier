@@ -14,7 +14,12 @@ public sealed partial class SiliconLawBoundComponent : Component
     /// <summary>
     /// The last entity that provided laws to this entity.
     /// </summary>
-    [DataField]
+    // Dark Haven: deliberately NOT a [DataField]. This is a runtime cache (the station/grid/self that last
+    // supplied laws), re-resolved on the next GetSiliconLaws and defensively nulled if its target is gone.
+    // Persisting it made a saved silicon (e.g. a Station AI) dangle a "missing entity" reference on map save,
+    // because the provider is usually a nullspace station or a grid outside the saved map. Laws themselves are
+    // unaffected — this just re-populates after load.
+    [ViewVariables]
     public EntityUid? LastLawProvider;
 }
 

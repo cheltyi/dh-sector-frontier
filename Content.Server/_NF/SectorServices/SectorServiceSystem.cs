@@ -31,16 +31,38 @@ public sealed class SectorServiceSystem : EntitySystem
     private void OnComponentInit(EntityUid uid, StationSectorServiceHostComponent component, ComponentInit args)
     {
         Log.Debug($"OnComponentStartup! Entity: {uid} internal: {_entity}");
-        if (_entity == EntityUid.Invalid)
-        {
-            _entity = Spawn();
-            component.SectorUid = _entity;
 
-            foreach (var servicePrototype in _prototypeManager.EnumeratePrototypes<SectorServicePrototype>())
+        // The singleton is already established this round (fresh-spawned or adopted from a save).
+        if (_entity != EntityUid.Invalid && EntityManager.EntityExists(_entity))
+        {
+            // Dark Haven - persistence: a save loaded AFTER the singleton was set (e.g. the .sectors file, loaded
+            // after the main map) can bring in a DUPLICATE service entity via this host's persisted SectorUid.
+            // Drop it so systems that iterate service components (bank/mail/bounties) don't double-process.
+            if (component.SectorUid != EntityUid.Invalid
+                && component.SectorUid != _entity
+                && EntityManager.EntityExists(component.SectorUid))
             {
-                Log.Debug($"Adding components for service {servicePrototype.ID}");
-                _entityManager.AddComponents(_entity, servicePrototype.Components, false); // removeExisting false - do not override existing components.
+                QueueDel(component.SectorUid);
             }
+            component.SectorUid = _entity;
+            return;
+        }
+
+        // Dark Haven - persistence: adopt the service entity that rode along in this host's save. Its components
+        // (and thus SectorBank balances, records, etc.) are already deserialized, so we keep them rather than
+        // spawning a fresh default. removeExisting:false below still adds any service component introduced after
+        // the save was written, without clobbering restored data.
+        if (component.SectorUid != EntityUid.Invalid && EntityManager.EntityExists(component.SectorUid))
+            _entity = component.SectorUid;
+        else
+            _entity = Spawn();
+
+        component.SectorUid = _entity;
+
+        foreach (var servicePrototype in _prototypeManager.EnumeratePrototypes<SectorServicePrototype>())
+        {
+            Log.Debug($"Adding components for service {servicePrototype.ID}");
+            _entityManager.AddComponents(_entity, servicePrototype.Components, false); // removeExisting false - do not override existing components.
         }
     }
 

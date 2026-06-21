@@ -129,10 +129,22 @@ public sealed partial class GameTicker
             foreach (var map in maps)
             {
                 if (!TryComp<PersistentSectorMapComponent>(map.Owner, out var marker) || string.IsNullOrEmpty(marker.ConfigId))
+                {
+                    // Dark Haven - persistence: a loaded sector map with no usable marker is unmanaged (no system
+                    // tracks it), so delete it instead of leaving it live to be re-saved as a growing duplicate.
+                    Log.Warning($"[Persistence] Sector restore: dropping unmarked loaded map {map.Comp.MapId}.");
+                    _map.DeleteMap(map.Comp.MapId);
                     continue;
+                }
 
                 if (!sectors.RestoreSectorInstance(marker.ConfigId, map.Comp.MapId, map.Owner))
+                {
+                    // Dark Haven - persistence: config unknown/renamed or the sector is already registered -> this
+                    // loaded map is an orphan/duplicate. Delete it so it isn't left untracked and re-saved.
+                    Log.Warning($"[Persistence] Sector restore: dropping unclaimable sector '{marker.ConfigId}' (map {map.Comp.MapId}).");
+                    _map.DeleteMap(map.Comp.MapId);
                     continue;
+                }
 
                 if (!_map.IsInitialized(map.Comp.MapId))
                     _map.InitializeMap(map.Comp.MapId);

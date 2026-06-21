@@ -43,6 +43,7 @@ namespace Content.Server.DeviceNetwork.Systems
         public override void Initialize()
         {
             SubscribeLocalEvent<DeviceNetworkComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<DeviceNetworkComponent, ComponentStartup>(OnNetworkStartup); // Dark Haven: persistence reconnect
             SubscribeLocalEvent<DeviceNetworkComponent, ComponentShutdown>(OnNetworkShutdown);
             SubscribeLocalEvent<DeviceNetworkComponent, ExaminedEvent>(OnExamine);
 
@@ -122,6 +123,38 @@ namespace Content.Server.DeviceNetwork.Systems
 
             if (device.AutoConnect)
                 ConnectDevice(uid, device);
+        }
+
+        /// <summary>
+        /// Dark Haven - persistence: a device loaded from a map save is already MapInitialized, so MapInitEvent
+        /// is NOT re-raised and it never auto-connects to its DeviceNet (air alarms, atmos/fire alarms, crew
+        /// sensors, etc. go silent after a restart). Reconnect such loaded devices on ComponentStartup. Fresh
+        /// spawns are still Initializing here (not yet MapInitialized), so they fall through to OnMapInit.
+        /// </summary>
+        private void OnNetworkStartup(EntityUid uid, DeviceNetworkComponent device, ComponentStartup args)
+        {
+            if (LifeStage(uid) < EntityLifeStage.MapInitialized)
+                return;
+
+            if (!device.AutoConnect || IsDeviceConnected(uid, device))
+                return;
+
+            // Resolved frequencies are serialized, but re-resolve defensively (mirrors OnMapInit) for older saves.
+            if (device.ReceiveFrequency == null
+                && device.ReceiveFrequencyId != null
+                && _protoMan.TryIndex<DeviceFrequencyPrototype>(device.ReceiveFrequencyId, out var receive))
+            {
+                device.ReceiveFrequency = receive.Frequency;
+            }
+
+            if (device.TransmitFrequency == null
+                && device.TransmitFrequencyId != null
+                && _protoMan.TryIndex<DeviceFrequencyPrototype>(device.TransmitFrequencyId, out var xmit))
+            {
+                device.TransmitFrequency = xmit.Frequency;
+            }
+
+            ConnectDevice(uid, device);
         }
 
         private DeviceNet GetNetwork(int netId)

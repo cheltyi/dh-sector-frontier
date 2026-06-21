@@ -16,7 +16,10 @@ public sealed partial class UpgradePowerDrawComponent : Component
     /// Prioritizes hv/mv draw over lv draw.
     /// Value is initializezd on map init from <see cref="ApcPowerReceiverComponent"/>
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    // Dark Haven: [DataField] so the captured base survives a persistence map save. MapInit (where it is
+    // captured) is NOT re-raised for loaded post-init entities, so without serializing it a later
+    // RefreshParts would recompute power from 0. Same reason ThrusterComponent.BaseThrust is serialized.
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float BaseLoad;
 
     /// <summary>

@@ -52,7 +52,10 @@ public sealed partial class ShuttleAutopilotComponent : Component
     // --- server-only runtime state (not networked) ---
 
     /// <summary>The spawned virtual pilot mob attached to a console; null when not engaged.</summary>
-    [ViewVariables]
+    // Dark Haven - persistence: serialize (server-only) so a mid-autopilot save round-trips to the SAME pilot mob
+    // (it lives on this grid, in save scope). On load EnsurePilot reuses it and re-links via AddPilot, so no
+    // orphaned/duplicate pilot mob is left behind.
+    [ViewVariables, DataField(serverOnly: true)]
     public EntityUid? PilotEntity;
 
     /// <summary>Index of the route waypoint we are currently flying toward.</summary>
