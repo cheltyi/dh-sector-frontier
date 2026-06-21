@@ -34,12 +34,12 @@ public sealed partial class BladderComponent : Component
     [DataField, AutoNetworkedField]
     public float RelieveRate = 40f;
 
-    /// <summary>Added to the bladder each time the mob eats / drinks (drinking adds more).</summary>
+    /// <summary>Added to the need each time the mob eats / drinks. Drinking adds little (customer: ~4x less).</summary>
     [DataField, AutoNetworkedField]
     public float FoodFill = 8f;
 
     [DataField, AutoNetworkedField]
-    public float DrinkFill = 16f;
+    public float DrinkFill = 4f;
 
     // Bands: below Full = no effect; Full = alert + mild slow; Bursting = alert + strong slow.
     [DataField, AutoNetworkedField]
