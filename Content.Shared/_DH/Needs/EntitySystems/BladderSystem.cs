@@ -57,9 +57,16 @@ public sealed class BladderSystem : EntitySystem
 
     private void OnRefreshMovespeed(Entity<BladderComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {
-        // Only the bursting band slows the mob (like hunger/thirst at their worst).
-        if (GetBand(ent.Comp) == 2)
-            args.ModifySpeed(ent.Comp.BurstingSlowdown, ent.Comp.BurstingSlowdown);
+        // Both filled bands slow the mob: full = mild, bursting = strong (like hunger/thirst getting worse).
+        var slow = GetBand(ent.Comp) switch
+        {
+            2 => ent.Comp.BurstingSlowdown,
+            1 => ent.Comp.FullSlowdown,
+            _ => 1f,
+        };
+
+        if (slow < 1f)
+            args.ModifySpeed(slow, slow);
     }
 
     public void SetValue(Entity<BladderComponent> ent, float value)
@@ -69,7 +76,7 @@ public sealed class BladderSystem : EntitySystem
         Dirty(ent);
     }
 
-    /// <summary>0 = fine, 1 = full (alert), 2 = bursting (alert + slow).</summary>
+    /// <summary>0 = fine, 1 = full (alert + mild slow), 2 = bursting (alert + strong slow).</summary>
     private int GetBand(BladderComponent comp)
     {
         if (comp.Value >= comp.BurstingThreshold)

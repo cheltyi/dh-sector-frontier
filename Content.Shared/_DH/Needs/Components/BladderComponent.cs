@@ -41,12 +41,15 @@ public sealed partial class BladderComponent : Component
     [DataField, AutoNetworkedField]
     public float DrinkFill = 16f;
 
-    // Bands: below Full = no effect; Full = alert; Bursting = alert + slow.
+    // Bands: below Full = no effect; Full = alert + mild slow; Bursting = alert + strong slow.
     [DataField, AutoNetworkedField]
     public float FullThreshold = 130f;
 
     [DataField, AutoNetworkedField]
     public float BurstingThreshold = 175f;
+
+    [DataField, AutoNetworkedField]
+    public float FullSlowdown = 0.9f;
 
     [DataField, AutoNetworkedField]
     public float BurstingSlowdown = 0.75f;

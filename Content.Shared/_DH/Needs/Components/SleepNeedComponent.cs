@@ -11,7 +11,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared._DH.Needs.Components;
 
 /// <summary>
-/// Need to sleep. <see cref="Value"/> rises while awake (~3 hours to <see cref="Max"/>) and drains while the
+/// Need to sleep. <see cref="Value"/> rises while awake (~1.5 hours to <see cref="Max"/>) and drains while the
 /// mob is asleep. As it rises the mob slows down; at <see cref="Max"/> the mob passes out on its own. Only on
 /// organic species (robots/silicon don't have this component, so they have no sleep need).
 /// </summary>
@@ -26,9 +26,9 @@ public sealed partial class SleepNeedComponent : Component
     [DataField, AutoNetworkedField]
     public float Max = 200f;
 
-    /// <summary>Tiredness gained per second while awake. 0.0185 ≈ 3 hours from 0 to Max (200).</summary>
+    /// <summary>Tiredness gained per second while awake. 0.037 ≈ 1.5 hours from 0 to Max (200).</summary>
     [DataField, AutoNetworkedField]
-    public float RiseRate = 0.0185f;
+    public float RiseRate = 0.037f;
 
     /// <summary>Tiredness lost per second while asleep. ~0.6 clears a full meter in ~5.5 minutes of sleep.</summary>
     [DataField, AutoNetworkedField]
