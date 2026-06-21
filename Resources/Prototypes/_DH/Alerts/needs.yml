@@ -1,0 +1,45 @@
+# Dark Haven - sleep & bladder need alerts
+
+- type: alertCategory
+  id: Sleep
+
+- type: alertCategory
+  id: Bladder
+
+# --- Sleep (placeholder icons reuse hunger.rsi until custom art exists) ---
+- type: alert
+  id: SleepTired
+  category: Sleep
+  icons:
+  - sprite: /Textures/Interface/Alerts/hunger.rsi
+    state: peckish
+  name: alerts-sleep-tired-name
+  description: alerts-sleep-tired-desc
+
+- type: alert
+  id: SleepExhausted
+  category: Sleep
+  icons:
+  - sprite: /Textures/Interface/Alerts/hunger.rsi
+    state: starving
+  name: alerts-sleep-exhausted-name
+  description: alerts-sleep-exhausted-desc
+
+# --- Bladder (placeholder icons reuse thirst.rsi) ---
+- type: alert
+  id: BladderFull
+  category: Bladder
+  icons:
+  - sprite: /Textures/Interface/Alerts/thirst.rsi
+    state: thirsty
+  name: alerts-bladder-full-name
+  description: alerts-bladder-full-desc
+
+- type: alert
+  id: BladderBursting
+  category: Bladder
+  icons:
+  - sprite: /Textures/Interface/Alerts/thirst.rsi
+    state: parched
+  name: alerts-bladder-bursting-name
+  description: alerts-bladder-bursting-desc

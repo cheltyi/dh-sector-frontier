@@ -243,6 +243,8 @@
   id: BaseMobSpeciesOrganic
   abstract: true
   components:
+  - type: SleepNeed # Dark Haven - sleep need (organic only, so robots are excluded)
+  - type: Bladder # Dark Haven - bladder/toilet need (organic only)
   - type: DiseaseCarrier # backmen
   - type: Barotrauma
     damage:

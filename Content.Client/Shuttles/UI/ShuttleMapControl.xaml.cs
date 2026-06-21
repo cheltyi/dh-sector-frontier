@@ -117,6 +117,19 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
+        // Dark Haven: pick an autopilot target on the big map (sublight, same map only).
+        if (AutopilotPickMode && ViewingMap != MapId.Nullspace && args.Function == EngineKeyFunctions.UIClick)
+        {
+            if (EntManager.TryGetComponent<TransformComponent>(_shuttleEntity, out var apXform) && apXform.MapID == ViewingMap)
+            {
+                var apCoords = new MapCoordinates(InverseMapPosition(args.RelativePixelPosition), ViewingMap);
+                RequestAutopilotTarget?.Invoke(apCoords);
+            }
+
+            base.KeyBindUp(args);
+            return;
+        }
+
         if (FtlMode && ViewingMap != MapId.Nullspace)
         {
             if (args.Function == EngineKeyFunctions.UIClick)
@@ -588,6 +601,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                 }
             }
         }
+
+        DhDrawAutopilot(handle, matty); // Dark Haven - draw the autopilot route/marker on the sector map
 
         // Draw the coordinates
         var mapOffset = MidPointVector;

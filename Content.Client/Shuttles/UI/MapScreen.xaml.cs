@@ -87,6 +87,7 @@ public sealed partial class MapScreen : BoxContainer
         OnVisibilityChanged += OnVisChange;
 
         MapFTLButton.OnToggled += FtlPreviewToggled;
+        DhInitialize(); // Dark Haven - autopilot map-pick
 
         _ftlStyle = new StyleBoxFlat(Color.LimeGreen);
         FTLBar.ForegroundStyleBoxOverride = _ftlStyle;
@@ -202,6 +203,7 @@ public sealed partial class MapScreen : BoxContainer
         if (obj.Pressed)
         {
             MapRadar.ShowFTLRangeOnly = false;
+            DhCancelAutopilotPick(); // Dark Haven - FTL and autopilot picking are mutually exclusive
         }
     }
 
@@ -591,6 +593,8 @@ public sealed partial class MapScreen : BoxContainer
 
         var progress = _ftlTime.ProgressAt(curTime);
         FTLBar.Value = float.IsFinite(progress) ? progress : 1;
+
+        DhFrameUpdate(); // Dark Haven - autopilot map-pick button gating
     }
 
     protected override void Draw(DrawingHandleScreen handle)

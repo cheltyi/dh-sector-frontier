@@ -47,6 +47,11 @@
                                  ToggleMode="True"
                                  Text="{controls:Loc 'shuttle-console-ftl-button'}"
                                  TextAlign="Center"/>
+                <!-- Dark Haven: pick an autopilot destination on the map -->
+                <controls:Button Name="MapAutopilotButton"
+                                 ToggleMode="True"
+                                 Text="{controls:Loc 'shuttle-console-autopilot-map'}"
+                                 TextAlign="Center"/>
                 <controls:Button Name="MapRebuildButton"
                         Text="{controls:Loc 'shuttle-console-map-rebuild'}"
                         TextAlign="Center"/>

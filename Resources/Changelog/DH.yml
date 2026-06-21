@@ -117,3 +117,15 @@ Entries:
       message: фиксы
   id: 10
   time: '2026-06-18T12:00:00.0000000+00:00'
+- author: chvl
+  changes:
+    - type: add
+      message: чето там
+  id: 11
+  time: '2026-06-19T12:00:00.0000000+00:00'
+- author: chvl
+  changes:
+    - type: add
+      message: система сна и туалета, дальний автопилот
+  id: 11
+  time: '2026-06-19T12:00:00.0000000+00:00'

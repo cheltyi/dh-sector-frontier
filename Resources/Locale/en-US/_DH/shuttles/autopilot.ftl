@@ -7,6 +7,8 @@ shuttle-console-build-route-desc = Click a point on the radar to set the autopil
 shuttle-console-route-start = Start
 shuttle-console-route-stop = Stop
 shuttle-console-route-toggle-desc = Engage or disengage the autopilot toward the built route.
+shuttle-console-autopilot-map = Autopilot Target
+shuttle-console-autopilot-map-desc = Pick an autopilot destination anywhere on the sector map.
 
 # Item slot
 autopilot-slot-name = Autopilot Module
