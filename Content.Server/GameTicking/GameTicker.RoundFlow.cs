@@ -8,6 +8,7 @@ using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.Roles;
+using Content.Server.Shuttles.Systems; // Dark Haven - persistence: wait out in-flight FTL before autosaving
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
@@ -64,6 +65,10 @@ namespace Content.Server.GameTicking
 
         // Frontier persistence (session-save): staged autosave-warning countdown (3 = no warnings sent yet).
         private int _warnings = 3;
+
+        // Dark Haven - persistence: cap on how long an autosave is held back waiting for in-flight FTL jumps to
+        // land on a real map, so a stuck jump can't postpone saving forever.
+        private static readonly TimeSpan MaxFtlSaveDefer = TimeSpan.FromSeconds(60);
 
         [ViewVariables]
         public GameRunLevel RunLevel
@@ -178,12 +183,20 @@ namespace Content.Server.GameTicking
             }
 
             _map.SetPaused(DefaultMap, true);
-            var start = _gameTiming.CurTime;
-            var saveStat = _loader.TrySaveMap(DefaultMap, new ResPath(savePath));
-            var end = _gameTiming.CurTime;
-            _adminLogger.Add(LogType.EventRan, LogImpact.Extreme,
-                $"MAP SAVE STATUS: {saveStat} TIME TAKEN: {(end - start).TotalSeconds}");
-            _map.SetPaused(DefaultMap, false);
+            // Dark Haven - persistence: unpause in finally so a serialization exception can't leave the main
+            // station map frozen (no physics/atmos/timers) for the rest of the round.
+            try
+            {
+                var start = _gameTiming.CurTime;
+                var saveStat = _loader.TrySaveMap(DefaultMap, new ResPath(savePath));
+                var end = _gameTiming.CurTime;
+                _adminLogger.Add(LogType.EventRan, LogImpact.Extreme,
+                    $"MAP SAVE STATUS: {saveStat} TIME TAKEN: {(end - start).TotalSeconds}");
+            }
+            finally
+            {
+                _map.SetPaused(DefaultMap, false);
+            }
 
             // Lua persistence: also persist secondary Lua sector maps (and the shuttles/stations on them)
             // to a sibling file, so player ships left in other sectors survive a restart too.
@@ -849,10 +862,20 @@ namespace Content.Server.GameTicking
                     }
                     if (_timeToNextSave > TimeSpan.FromMinutes(interval))
                     {
-                        _timeToNextSave = TimeSpan.Zero;
-                        _warnings = 3;
-                        SaveMaps();
-                        SendServerMessage(Loc.GetString("persistence-autosave-saved"));
+                        // Dark Haven - persistence: a shuttle mid-FTL lives on the transient hyperspace map, which
+                        // isn't serialized, so it would be lost on a later restore. FTL is short, so hold the
+                        // autosave until the jump lands on a real map (the timer stays overdue and is re-checked
+                        // each tick). Cap the wait so a stuck jump can't defer saving indefinitely.
+                        var deferForFtl = _timeToNextSave < TimeSpan.FromMinutes(interval) + MaxFtlSaveDefer
+                            && EntityManager.System<ShuttleSystem>().IsAnyFtlInProgress();
+
+                        if (!deferForFtl)
+                        {
+                            _timeToNextSave = TimeSpan.Zero;
+                            _warnings = 3;
+                            SaveMaps();
+                            SendServerMessage(Loc.GetString("persistence-autosave-saved"));
+                        }
                     }
                 }
             }

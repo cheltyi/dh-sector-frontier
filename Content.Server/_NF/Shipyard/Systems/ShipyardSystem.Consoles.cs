@@ -683,7 +683,10 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
         if (TryComp<ShuttleDeedComponent>(targetId, out var deed))
         {
-            if (Deleted(deed!.ShuttleUid))
+            // Dark Haven - persistence: only auto-remove the deed when its ship genuinely existed and is now
+            // deleted — NOT when ShuttleUid is null/unresolved (e.g. the cross-grid link was lost on load and the
+            // round-start re-resolve couldn't match it). Otherwise a reload would silently destroy ship deeds.
+            if (deed.ShuttleUid is { Valid: true } deedShip && Deleted(deedShip))
             {
                 RemComp<ShuttleDeedComponent>(targetId!.Value);
                 return;
@@ -789,7 +792,9 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
             if (TryComp<ShuttleDeedComponent>(targetId, out var deed))
             {
-                if (Deleted(deed!.ShuttleUid))
+                // Dark Haven - persistence: see note above — don't destroy a deed whose link is merely
+                // null/unresolved on load; only when the referenced ship genuinely existed and is now deleted.
+                if (deed.ShuttleUid is { Valid: true } deedShip && Deleted(deedShip))
                 {
                     RemComp<ShuttleDeedComponent>(targetId!.Value);
                     continue;

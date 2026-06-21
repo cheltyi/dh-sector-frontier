@@ -15,6 +15,9 @@ public sealed partial class GasDepositComponent : Component
     /// <summary>
     /// The maximum number of moles for this deposit to be considered "mostly depleted".
     /// </summary>
-    [ViewVariables]
+    // Dark Haven - persistence: [DataField] so the precomputed threshold survives a save. It is computed from the
+    // ORIGINAL deposit size only at MapInit (not re-raised on load); recomputing later would use the already-
+    // reduced TotalMoles and give a wrong (too-low) threshold.
+    [DataField]
     public float LowMoles;
 }

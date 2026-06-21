@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom; // Dark Haven - persistence: TimeOffsetSerializer
 
 namespace Content.Shared._NF.Anomaly;
 
@@ -11,7 +12,9 @@ public sealed partial class AnomalyLinkExpiryComponent : Component
     /// <summary>
     /// The time at which the link should check if it should be broken.
     /// </summary>
-    [DataField, AutoNetworkedField, AutoPausedField]
+    // Dark Haven - persistence: had pause handling but lacked TimeOffsetSerializer, so the absolute time wasn't
+    // re-based on load and the expiry check fired wrong after a restart.
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan EndTime;
 
 

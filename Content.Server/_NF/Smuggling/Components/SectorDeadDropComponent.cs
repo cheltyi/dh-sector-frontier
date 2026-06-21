@@ -14,7 +14,10 @@ public sealed partial class SectorDeadDropComponent : Component
     /// <summary>
     ///     Accumulator for FUC values.  Pays out at a given amount.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    // Dark Haven - persistence: [DataField] so the sub-payout accumulator survives a restart. The sector service
+    // entity hosting this component is now persisted (see StationSectorServiceHostComponent), and ComponentInit
+    // does not reset this field, so it round-trips correctly.
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 FUCAccumulator = FixedPoint2.Zero;
 
     // Utility field for windowing reported events.  Having more in an hour results in more precise information.

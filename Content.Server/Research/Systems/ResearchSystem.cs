@@ -6,6 +6,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Systems;
+using Content.Server.GameTicking.Events; // Dark Haven - persistence re-link at round start
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
@@ -34,6 +35,32 @@ namespace Content.Server.Research.Systems
             InitializeServer();
 
             SubscribeLocalEvent<TechnologyDatabaseComponent, ResearchRegistrationChangedEvent>(OnDatabaseRegistrationChanged);
+
+            SubscribeLocalEvent<RoundStartingEvent>(OnRoundStartingReconcile); // Dark Haven - persistence re-link
+        }
+
+        /// <summary>
+        /// Dark Haven - persistence: research clients loaded from a map save are already MapInitialized, so
+        /// OnClientMapInit is not re-raised and they reload with no server link (points/tech sharing stop). At
+        /// round start (maps fully loaded and initialized, broadphase ready) re-link any client that has no
+        /// server to a co-grid server. RegisterClient enforces the grid match and guards duplicates, so
+        /// already-linked (freshly generated) clients are skipped.
+        /// </summary>
+        private void OnRoundStartingReconcile(RoundStartingEvent ev)
+        {
+            var query = EntityQueryEnumerator<ResearchClientComponent>();
+            while (query.MoveNext(out var uid, out var client))
+            {
+                if (client.Server != null)
+                    continue;
+
+                var servers = GetServers(uid);
+                if (servers.Count == 0)
+                    continue;
+
+                var server = servers.First();
+                RegisterClient(uid, server.Owner, client, server.Comp);
+            }
         }
 
         /// <summary>

@@ -70,6 +70,7 @@ public sealed class PullingSystem : EntitySystem
 
         SubscribeLocalEvent<PullerComponent, UpdateMobStateEvent>(OnStateChanged, after: [typeof(MobThresholdSystem)]);
         SubscribeLocalEvent<PullerComponent, AfterAutoHandleStateEvent>(OnAfterState);
+        SubscribeLocalEvent<PullerComponent, ComponentStartup>(OnPullerStartup); // Dark Haven - persistence: re-add the runtime ActivePuller marker on load
         SubscribeLocalEvent<PullerComponent, EntGotInsertedIntoContainerMessage>(OnPullerContainerInsert);
         SubscribeLocalEvent<PullerComponent, EntityUnpausedEvent>(OnPullerUnpaused);
         SubscribeLocalEvent<PullerComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
@@ -117,6 +118,18 @@ public sealed class PullingSystem : EntitySystem
             _handsSystem.TryDrop((args.PullerUid, component), held);
             break;
         }
+    }
+
+    /// <summary>
+    /// Dark Haven - persistence: <see cref="ActivePullerComponent"/> is a runtime-only marker (added in
+    /// TryStartPull/OnAfterState, never serialized) that enables pull-follow rotation. A puller loaded from a
+    /// save while mid-pull comes back without it, so re-add it for any loaded puller that is still pulling.
+    /// EnsureComp is idempotent, so this is safe on both client and server.
+    /// </summary>
+    private void OnPullerStartup(Entity<PullerComponent> ent, ref ComponentStartup args)
+    {
+        if (ent.Comp.Pulling != null)
+            EnsureComp<ActivePullerComponent>(ent);
     }
 
     private void OnStateChanged(EntityUid uid, PullerComponent component, ref UpdateMobStateEvent args)

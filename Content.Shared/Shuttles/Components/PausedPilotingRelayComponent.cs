@@ -9,6 +9,8 @@ namespace Content.Shared.Shuttles.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PausedPilotingRelayComponent : Component
 {
-    [DataField]
+    // Dark Haven - persistence: not a [DataField]. Transient pilot-relay target stored only while piloting;
+    // serializing it dangles on save (mirrors RelayInputMoverComponent.RelayEntity).
+    [ViewVariables]
     public EntityUid RelayTarget;
 } 

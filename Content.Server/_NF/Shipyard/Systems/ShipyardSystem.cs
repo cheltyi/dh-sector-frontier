@@ -6,6 +6,7 @@ using Content.Server.Station.Systems;
 using Content.Shared._NF.Shipyard.Components;
 using Content.Shared._NF.Shipyard;
 using Content.Shared.GameTicking;
+using Content.Server.GameTicking.Events; // Dark Haven - persistence: re-resolve deeds at round start
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Content.Shared._NF.CCVar;
@@ -82,6 +83,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         SubscribeLocalEvent<ShipyardConsoleComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<ShipyardConsoleComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        SubscribeLocalEvent<RoundStartingEvent>(OnReResolveDeeds); // Dark Haven - persistence: restore cross-map deed/crew links
         SubscribeLocalEvent<StationDeedSpawnerComponent, MapInitEvent>(OnInitDeedSpawner);
         InitializeDockSelect(); // Lua
     }
@@ -95,6 +97,48 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (!_enabled)
             return;
         InitializeConsole();
+    }
+
+    /// <summary>
+    /// Dark Haven - persistence: a ship deed on an ID card references the ship GRID (cross-grid). When the card
+    /// and the ship are saved to different files (e.g. the ship parked in a sector), that reference dangles and is
+    /// nulled on load, severing ownership (and crew) links. The grid-side deed is authoritative — it
+    /// self-references its own grid, so it survives in scope. At round start, rebuild a full-name -> grid map from
+    /// the grid-side deeds and re-link any card-side deed / crew assignment whose ShuttleUid was lost. Matching is
+    /// by the exact full ship name (name + unique suffix), so it cannot mis-assign.
+    /// </summary>
+    private void OnReResolveDeeds(RoundStartingEvent ev)
+    {
+        // Authoritative source: grid-side deeds self-reference their own grid.
+        var nameToGrid = new Dictionary<string, EntityUid>();
+        var gridQuery = EntityQueryEnumerator<ShuttleDeedComponent>();
+        while (gridQuery.MoveNext(out var uid, out var deed))
+        {
+            if (deed.ShuttleUid != uid)
+                continue;
+            var full = GetFullName(deed);
+            if (!string.IsNullOrWhiteSpace(full))
+                nameToGrid[full] = uid;
+        }
+
+        if (nameToGrid.Count == 0)
+            return;
+
+        // Re-link card-side deeds whose cross-grid ShuttleUid was nulled on load.
+        var cardQuery = EntityQueryEnumerator<ShuttleDeedComponent>();
+        while (cardQuery.MoveNext(out var uid, out var deed))
+        {
+            if (deed.ShuttleUid is { Valid: true }) // grid-side, or card-side still resolved (co-saved)
+                continue;
+            if (nameToGrid.TryGetValue(GetFullName(deed), out var grid))
+            {
+                deed.ShuttleUid = grid;
+                Dirty(uid, deed);
+            }
+        }
+
+        // Crew assignments are queried by ShuttleUid; re-link them by their stored ShipName via the same map.
+        _shipCrew.ReResolveAssignments(nameToGrid);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)

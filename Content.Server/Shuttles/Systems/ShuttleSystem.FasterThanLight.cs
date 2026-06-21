@@ -160,6 +160,23 @@ public sealed partial class ShuttleSystem
         return mapUid;
     }
 
+    /// <summary>
+    /// Dark Haven - persistence: true if any shuttle is actively in an FTL jump (Starting/Travelling/Arriving),
+    /// i.e. potentially sitting on the transient hyperspace map. The persistence autosave waits for this to clear
+    /// so it never serializes a grid that lives on the (unsaved) FTL map and would be lost on restore.
+    /// </summary>
+    public bool IsAnyFtlInProgress()
+    {
+        var query = EntityQueryEnumerator<FTLComponent>();
+        while (query.MoveNext(out _, out var ftl))
+        {
+            if (ftl.State is FTLState.Starting or FTLState.Travelling or FTLState.Arriving)
+                return true;
+        }
+
+        return false;
+    }
+
     public StartEndTime GetStateTime(FTLComponent component)
     {
         var state = component.State;

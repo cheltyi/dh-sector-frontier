@@ -49,7 +49,10 @@ public sealed partial class RadarConsoleComponent : Component
     /// <summary>
     /// If not null, the target whose information will be displayed on the radar.
     /// </summary>
-    [DataField]
+    // Dark Haven - persistence: not a [DataField]. This is a runtime UI lock on another ship's grid (cross-grid),
+    // re-established via RadarConsoleSystem.SetTarget and networked through the BUI state — serializing it dangles
+    // a cross-map reference on save.
+    [ViewVariables]
     public EntityUid? TargetEntity;
 
     /// <summary>

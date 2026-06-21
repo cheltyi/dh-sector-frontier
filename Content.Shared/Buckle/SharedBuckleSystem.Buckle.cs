@@ -22,6 +22,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
@@ -39,6 +40,7 @@ public abstract partial class SharedBuckleSystem
     private void InitializeBuckle()
     {
         SubscribeLocalEvent<BuckleComponent, ComponentShutdown>(OnBuckleComponentShutdown);
+        SubscribeLocalEvent<BuckleComponent, ComponentStartup>(OnBuckleStartup); // Dark Haven - persistence: re-establish the joint relay on load
         SubscribeLocalEvent<BuckleComponent, MoveEvent>(OnBuckleMove);
         SubscribeLocalEvent<BuckleComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<BuckleComponent, EntGotInsertedIntoContainerMessage>(OnInserted);
@@ -61,6 +63,23 @@ public abstract partial class SharedBuckleSystem
         {
             BuckleDoafterEarly((uid, comp), ev.Event, ev);
         });
+    }
+
+    /// <summary>
+    /// Dark Haven - persistence: BuckledTo round-trips, but the joint RELAY to the strap is only set inside
+    /// Buckle(), and the engine's JointComponent ComponentInit (which fires before this) wipes any relay. So a
+    /// buckled mob loaded from a save has no movement relay to its strap. Re-apply it on ComponentStartup (which
+    /// runs after JointComponent's init). SetRelay is idempotent, so fresh buckles are unaffected.
+    /// </summary>
+    private void OnBuckleStartup(Entity<BuckleComponent> ent, ref ComponentStartup args)
+    {
+        if (ent.Comp.BuckledTo is not { } strap)
+            return;
+
+        if (!HasComp<StrapComponent>(strap) || !HasComp<JointComponent>(ent))
+            return;
+
+        _joints.SetRelay(ent, strap);
     }
 
     private void OnBuckleComponentShutdown(Entity<BuckleComponent> ent, ref ComponentShutdown args)

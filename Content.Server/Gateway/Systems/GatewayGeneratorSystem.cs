@@ -60,6 +60,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<GatewayGeneratorComponent, MapInitEvent>(OnGeneratorMapInit);
+        SubscribeLocalEvent<GatewayGeneratorComponent, ComponentStartup>(OnGeneratorStartup); // Dark Haven - persistence
         SubscribeLocalEvent<GatewayGeneratorComponent, ComponentShutdown>(OnGeneratorShutdown);
         SubscribeLocalEvent<GatewayGeneratorDestinationComponent, AttemptGatewayOpenEvent>(OnGeneratorAttemptOpen);
         SubscribeLocalEvent<GatewayGeneratorDestinationComponent, GatewayOpenEvent>(OnGeneratorOpen);
@@ -74,6 +75,28 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
             QueueDel(genUid);
         }
+    }
+
+    /// <summary>
+    /// Dark Haven - persistence: a generator loaded from a save is already MapInitialized (MapInit is not
+    /// re-raised), and its <see cref="GatewayGeneratorComponent.Generated"/> list is intentionally not persisted
+    /// (the destination maps are transient), so a restored generator would come back with no destinations. Seed
+    /// one on load when it has none. Fresh spawns are still Initializing at ComponentStartup, so they skip this
+    /// and let OnGeneratorMapInit do the initial generation.
+    /// </summary>
+    private void OnGeneratorStartup(EntityUid uid, GatewayGeneratorComponent generator, ComponentStartup args)
+    {
+        if (LifeStage(uid) < EntityLifeStage.MapInitialized)
+            return;
+
+        if (!_cfgManager.GetCVar(CCVars.GatewayGeneratorEnabled))
+            return;
+
+        if (generator.Generated.Count > 0)
+            return;
+
+        generator.NextUnlock = TimeSpan.FromSeconds(5);
+        GenerateDestination(uid, generator);
     }
 
     private void OnGeneratorMapInit(EntityUid uid, GatewayGeneratorComponent generator, MapInitEvent args)

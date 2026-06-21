@@ -1,5 +1,6 @@
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Whitelist;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom; // Dark Haven - persistence: TimeOffsetSerializer
 
 namespace Content.Server.Speech.Components;
 
@@ -32,7 +33,8 @@ public sealed partial class ParrotSpeechComponent : Component
     [DataField]
     public EntityWhitelist Blacklist { get; private set; } = new();
 
-    [DataField]
+    // Dark Haven - persistence: absolute CurTime, so use TimeOffsetSerializer to re-base it on load.
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? NextUtterance;
 
     [DataField(readOnly: true)]

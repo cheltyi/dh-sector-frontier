@@ -3,11 +3,12 @@
 // See AGPLv3.txt for details.
 
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server._Lua.HardsuitReanimation;
 
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class HardsuitReanimationComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -34,6 +35,8 @@ public sealed partial class HardsuitReanimationComponent : Component
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string EmpPulseEffect = "EffectEmpPulse";
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    // Dark Haven - persistence: absolute CurTime, so use TimeOffsetSerializer + pause handling, or the
+    // reanimation cooldown is stuck after a restart.
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan LastReanimationTime = TimeSpan.Zero;
 }

@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
@@ -20,7 +21,9 @@ public sealed partial class DeadDropComponent : Component
     /// <summary>
     ///     When the next drop will occur. Used internally.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    // Dark Haven - persistence: absolute CurTime, so use TimeOffsetSerializer to re-base it on load; otherwise
+    // the dead-drop cadence is broken after a restart (fires instantly or never).
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan? NextDrop;
 
     /// <summary>
