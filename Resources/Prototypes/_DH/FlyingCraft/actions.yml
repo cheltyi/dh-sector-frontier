@@ -1,0 +1,42 @@
+# Dark Haven - flying craft actions
+# (FTL/BSS is no longer an action — the pilot picks a destination on the HUD radar MAP, see FlyingCraftJumpSystem.)
+- type: entity
+  id: ActionFlyingCraftExit
+  name: Leave Craft
+  description: Climb out of the flying craft.
+  components:
+  - type: Action
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_eject
+    useDelay: 0.5
+  - type: InstantAction
+    event: !type:FlyingCraftExitActionEvent
+
+- type: entity
+  id: ActionFlyingCraftSwapWeapon
+  name: Switch Weapon
+  description: Switch which nose-mounted weapon you fire.
+  components:
+  - type: Action
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_cycle_equip_on
+  - type: InstantAction
+    event: !type:FlyingCraftSwapWeaponActionEvent
+
+- type: entity
+  id: ActionFlyingCraftHeadlight
+  name: Headlight
+  description: Toggle the craft's forward floodlight.
+  components:
+  - type: Action
+    useDelay: 0.5
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_lights_off
+    iconOn:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_lights_on
+  - type: InstantAction
+    event: !type:FlyingCraftHeadlightActionEvent

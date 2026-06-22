@@ -1,0 +1,105 @@
+# Dark Haven - flying craft purchase consoles + map spawner pads. Mappers place pads near the matching console
+# (within spawnRange); the console buys a craft with bank money and spawns it on a chosen nearby pad. The board
+# console sells boards (spawned at the console).
+
+# ---------------- Spawn pads (map markers) ----------------
+- type: entity
+  parent: MarkerBase
+  id: FlyingCraftCivilianSpawner
+  name: civilian craft pad
+  suffix: DH flying craft
+  components:
+  - type: FlyingCraftCivilianSpawner
+
+- type: entity
+  parent: MarkerBase
+  id: FlyingCraftSecuritySpawner
+  name: security craft pad
+  suffix: DH flying craft
+  components:
+  - type: FlyingCraftSecuritySpawner
+
+# ---------------- Consoles ----------------
+- type: entity
+  parent: BaseComputer
+  id: ComputerFlyingCraftCivilian
+  name: civilian craft vendor
+  description: Buy a civilian flying craft and spawn it on a nearby civilian pad.
+  components:
+  - type: FlyingCraftPurchaseConsole
+    spawnerKind: Civilian
+    spawnRange: 50
+    catalog:
+    - proto: FlyingCraftCivilianHauler
+      price: 12000
+    - proto: FlyingCraftCivilianRunner
+      price: 12000
+  - type: ActivatableUI
+    key: enum.FlyingCraftConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.FlyingCraftConsoleUiKey.Key:
+        type: FlyingCraftConsoleBoundUserInterface
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerFlyingCraftSecurity
+  name: security craft vendor
+  description: Buy a tier-1 combat flying craft and spawn it on a nearby security pad.
+  components:
+  - type: FlyingCraftPurchaseConsole
+    spawnerKind: Security
+    spawnRange: 50
+    catalog:
+    - proto: FlyingCraftFighter
+      price: 10000
+    - proto: FlyingCraftInterceptor
+      price: 10000
+    - proto: FlyingCraftBomber
+      price: 10000
+    - proto: FlyingCraftAttacker
+      price: 10000
+    - proto: FlyingCraftScout
+      price: 10000
+  - type: ActivatableUI
+    key: enum.FlyingCraftConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.FlyingCraftConsoleUiKey.Key:
+        type: FlyingCraftConsoleBoundUserInterface
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerFlyingCraftBoards
+  name: craft board vendor
+  description: Buy tier-upgrade and weaponisation boards for flying craft.
+  components:
+  - type: FlyingCraftPurchaseConsole
+    spawnerKind: None
+    catalog:
+    - proto: FlyingCraftBoardTier2
+      price: 20000
+    - proto: FlyingCraftBoardTier3
+      price: 40000
+    - proto: FlyingCraftBoardTier4
+      price: 60000
+    - proto: FlyingCraftBoardTier5
+      price: 80000
+    - proto: FlyingCraftWeaponBoardInterceptor
+      price: 30000
+    - proto: FlyingCraftWeaponBoardScout
+      price: 30000
+    - proto: FlyingCraftWeaponBoardFighterFast
+      price: 30000
+    - proto: FlyingCraftWeaponBoardBomber
+      price: 30000
+    - proto: FlyingCraftWeaponBoardAttacker
+      price: 30000
+    - proto: FlyingCraftWeaponBoardFighterHeavy
+      price: 30000
+  - type: ActivatableUI
+    key: enum.FlyingCraftConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.FlyingCraftConsoleUiKey.Key:
+        type: FlyingCraftConsoleBoundUserInterface

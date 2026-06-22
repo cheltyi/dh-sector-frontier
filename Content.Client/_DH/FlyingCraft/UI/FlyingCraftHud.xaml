@@ -1,0 +1,30 @@
+<widgets:FlyingCraftHud xmlns="https://spacestation14.io"
+                        xmlns:widgets="clr-namespace:Content.Client._DH.FlyingCraft.UI"
+                        MinSize="0 0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+    <BoxContainer Orientation="Vertical" HorizontalAlignment="Center">
+        <Button Name="ExpandButton" Access="Public" ToggleMode="True" HorizontalAlignment="Center" />
+        <PanelContainer Name="BodyPanel" Access="Public" StyleClasses="HotbarPanel">
+            <BoxContainer Orientation="Horizontal" SeparationOverride="12" Margin="8 6">
+                <!-- LEFT: ammo / reload / health / fuel + swap-weapon button (under fuel) -->
+                <BoxContainer Orientation="Vertical" SeparationOverride="2" MinSize="140 0" VerticalAlignment="Center">
+                    <Label Name="AmmoLabel" Access="Public" />
+                    <ProgressBar Name="ReloadBar" Access="Public" MinValue="0" MaxValue="1" Value="1" MinSize="140 6" />
+                    <Label Name="HealthLabel" Access="Public" />
+                    <ProgressBar Name="HealthBar" Access="Public" MinValue="0" MaxValue="1" Value="1" MinSize="140 6" />
+                    <Label Name="FuelLabel" Access="Public" />
+                    <Button Name="SwapWeaponButton" Access="Public" Text="{Loc 'flyingcraft-hud-btn-swap'}" />
+                </BoxContainer>
+                <!-- CENTER: radar -->
+                <widgets:FlyingCraftMiniRadarControl Name="MiniRadar" Access="Public" />
+                <!-- RIGHT: speed / coords + control buttons -->
+                <BoxContainer Orientation="Vertical" SeparationOverride="2" MinSize="140 0" VerticalAlignment="Center">
+                    <Label Name="SpeedLabel" Access="Public" />
+                    <Label Name="CoordsLabel" Access="Public" />
+                    <Button Name="MapButton" Access="Public" ToggleMode="True" Text="{Loc 'flyingcraft-hud-btn-map'}" />
+                    <Button Name="HeadlightButton" Access="Public" ToggleMode="True" Text="{Loc 'flyingcraft-hud-btn-headlight'}" />
+                    <Button Name="ExitButton" Access="Public" Text="{Loc 'flyingcraft-hud-btn-exit'}" />
+                </BoxContainer>
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</widgets:FlyingCraftHud>
