@@ -82,6 +82,13 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction ShuttleRotateRight = "ShuttleRotateRight";
         public static readonly BoundKeyFunction ShuttleBrake = "ShuttleBrake";
 
+        // Dark Haven - flying craft brake (held; reuses Space in the human context, see ContentContexts).
+        public static readonly BoundKeyFunction FlyingCraftBrake = "FlyingCraftBrake";
+
+        // Dark Haven - flying craft manual rotate (held; Q/E in the human context, see ContentContexts).
+        public static readonly BoundKeyFunction FlyingCraftRotateLeft = "FlyingCraftRotateLeft";
+        public static readonly BoundKeyFunction FlyingCraftRotateRight = "FlyingCraftRotateRight";
+
         public static readonly BoundKeyFunction Hotbar0 = "Hotbar0";
         public static readonly BoundKeyFunction Hotbar1 = "Hotbar1";
         public static readonly BoundKeyFunction Hotbar2 = "Hotbar2";

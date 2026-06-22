@@ -1,0 +1,109 @@
+# Dark Haven - flying craft boards. Tier boards upgrade a combat craft one tier per board (T1 has no board — it's
+# the base). Weapon boards convert a civilian craft into a combat class at T1 (speed civilian -> Interceptor/Scout/
+# Fighter; heavy civilian -> Bomber/Attacker/Fighter).
+
+# ---------------- Tier-upgrade boards ----------------
+- type: entity
+  parent: BaseItem
+  id: FlyingCraftBoardTier2
+  name: improved craft board
+  description: Upgrades a flying craft from tier 1 to tier 2.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: cpuboard
+  - type: FlyingCraftUpgradeBoard
+    tier: 2
+
+- type: entity
+  parent: FlyingCraftBoardTier2
+  id: FlyingCraftBoardTier3
+  name: heavy craft board
+  description: Upgrades a flying craft from tier 2 to tier 3 (heavy).
+  components:
+  - type: FlyingCraftUpgradeBoard
+    tier: 3
+
+- type: entity
+  parent: FlyingCraftBoardTier2
+  id: FlyingCraftBoardTier4
+  name: super-heavy craft board
+  description: Upgrades a flying craft from tier 3 to tier 4 (super-heavy).
+  components:
+  - type: FlyingCraftUpgradeBoard
+    tier: 4
+
+- type: entity
+  parent: FlyingCraftBoardTier2
+  id: FlyingCraftBoardTier5
+  name: experimental craft board
+  description: Upgrades a flying craft from tier 4 to tier 5 (experimental).
+  components:
+  - type: FlyingCraftUpgradeBoard
+    tier: 5
+
+# ---------------- Weaponisation boards (civilian -> combat) ----------------
+# From the FAST/runner civilian (forHeavy: false):
+- type: entity
+  parent: BaseItem
+  id: FlyingCraftWeaponBoardInterceptor
+  name: interceptor weapon board
+  description: Arms a fast civilian craft as a tier-1 Interceptor.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: cpu_security
+  - type: FlyingCraftWeaponBoard
+    targetCraft: FlyingCraftInterceptor
+    forHeavy: false
+
+- type: entity
+  parent: FlyingCraftWeaponBoardInterceptor
+  id: FlyingCraftWeaponBoardScout
+  name: scout weapon board
+  description: Arms a fast civilian craft as a tier-1 Scout.
+  components:
+  - type: FlyingCraftWeaponBoard
+    targetCraft: FlyingCraftScout
+    forHeavy: false
+
+- type: entity
+  parent: FlyingCraftWeaponBoardInterceptor
+  id: FlyingCraftWeaponBoardFighterFast
+  name: fighter weapon board (light)
+  description: Arms a fast civilian craft as a tier-1 Fighter.
+  components:
+  - type: FlyingCraftWeaponBoard
+    targetCraft: FlyingCraftFighter
+    forHeavy: false
+
+# From the HEAVY/hauler civilian (forHeavy: true):
+- type: entity
+  parent: FlyingCraftWeaponBoardInterceptor
+  id: FlyingCraftWeaponBoardBomber
+  name: bomber weapon board
+  description: Arms a heavy civilian craft as a tier-1 Bomber.
+  components:
+  - type: FlyingCraftWeaponBoard
+    targetCraft: FlyingCraftBomber
+    forHeavy: true
+
+- type: entity
+  parent: FlyingCraftWeaponBoardInterceptor
+  id: FlyingCraftWeaponBoardAttacker
+  name: attacker weapon board
+  description: Arms a heavy civilian craft as a tier-1 Attacker.
+  components:
+  - type: FlyingCraftWeaponBoard
+    targetCraft: FlyingCraftAttacker
+    forHeavy: true
+
+- type: entity
+  parent: FlyingCraftWeaponBoardInterceptor
+  id: FlyingCraftWeaponBoardFighterHeavy
+  name: fighter weapon board (heavy)
+  description: Arms a heavy civilian craft as a tier-1 Fighter.
+  components:
+  - type: FlyingCraftWeaponBoard
+    targetCraft: FlyingCraftFighter
+    forHeavy: true

@@ -1,0 +1,207 @@
+# Dark Haven - flying craft: 5 combat classes (tier-1 base) + 2 civilian variants.
+# Tiers are reached by inserting upgrade boards (FlyingCraftTierSystem.ApplyTier scales speed from tierSpeeds and
+# hull durability = baseDurability * 1.3^(tier-1), and adds the FTL/BSS jump at tier 3+). Classes differ by speed
+# (Scout fastest 40 t/s @T5, Interceptor 20, Bomber slowest 12), durability (Bomber base x1.5, Scout x0.75),
+# storage (Bomber x2, Fighter/Interceptor/Attacker x1.5, Scout base), manoeuvrability and weapons. Accel ramp is
+# ~10s to top speed for every tier (AccelTime on the component).
+
+# ---------------- COMBAT classes (tier-1 base; upgrade with boards) ----------------
+- type: entity
+  id: FlyingCraftFighter
+  parent: BaseFlyingCraft
+  name: Fighter
+  components:
+  - type: FlyingCraft
+    class: Fighter
+    tier: 1
+    maxAngularSpeedBase: 12.6
+    tierSpeeds: [ 8, 11, 14, 16, 18 ]
+    baseDurability: 500
+  - type: FlyingCraftFuel
+    fuel: 600
+    maxFuel: 600
+  - type: FlyingCraftWeapons
+    weapons:
+    - projectile: NFBulletLaserMedium
+      fireRate: 5
+      magazineSize: 30
+      reloadCooldown: 4
+      projectileSpeed: 32
+      fireSound:
+        path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    - projectile: NFBulletRifle30
+      fireRate: 6
+      magazineSize: 40
+      reloadCooldown: 3.5
+      projectileSpeed: 30
+      fireSound:
+        path: /Audio/Weapons/Guns/Gunshots/rifle.ogg
+  - type: Storage
+    grid:
+    - 0,0,8,3
+
+- type: entity
+  id: FlyingCraftInterceptor
+  parent: BaseFlyingCraft
+  name: Interceptor
+  components:
+  - type: FlyingCraft
+    class: Interceptor
+    tier: 1
+    maxAngularSpeedBase: 15.4
+    tierSpeeds: [ 9, 12, 15, 18, 20 ]
+    baseDurability: 320
+  - type: FlyingCraftFuel
+    fuel: 450
+    maxFuel: 450
+  - type: FlyingCraftWeapons
+    weapons:
+    - projectile: DHRocketConcussiveRkt
+      fireRate: 1
+      magazineSize: 4
+      reloadCooldown: 6
+      projectileSpeed: 22
+      fireSound:
+        path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+    - projectile: NFBulletRifle30
+      fireRate: 9
+      magazineSize: 45
+      reloadCooldown: 3
+      projectileSpeed: 30
+      fireSound:
+        path: /Audio/Weapons/Guns/Gunshots/rifle.ogg
+  - type: Storage
+    grid:
+    - 0,0,8,3
+
+- type: entity
+  id: FlyingCraftBomber
+  parent: BaseFlyingCraft
+  name: Bomber
+  components:
+  - type: FlyingCraft
+    class: Bomber
+    tier: 1
+    maxAngularSpeedBase: 8.4
+    tierSpeeds: [ 5, 7, 9, 10, 12 ]
+    baseDurability: 1200 # bomber base durability x1.5
+  - type: FlyingCraftFuel
+    fuel: 900
+    maxFuel: 900
+  - type: FlyingCraftWeapons
+    weapons:
+    - projectile: DHRocketHeavy
+      fireRate: 0.7
+      magazineSize: 6
+      reloadCooldown: 7
+      projectileSpeed: 18
+      fireSound:
+        path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+    - projectile: Bullet9x19mmFMJ
+      fireRate: 3
+      magazineSize: 50
+      reloadCooldown: 4
+      projectileSpeed: 28
+      fireSound:
+        path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+  - type: Storage
+    grid:
+    - 0,0,11,3 # bomber storage x2
+
+- type: entity
+  id: FlyingCraftAttacker
+  parent: BaseFlyingCraft
+  name: Attacker
+  components:
+  - type: FlyingCraft
+    class: Attacker
+    tier: 1
+    maxAngularSpeedBase: 10.5
+    tierSpeeds: [ 7, 9, 11, 13, 15 ]
+    baseDurability: 950
+  - type: FlyingCraftFuel
+    fuel: 700
+    maxFuel: 700
+  - type: FlyingCraftWeapons
+    weapons:
+    - projectile: NFBulletRifle30
+      fireRate: 6
+      magazineSize: 60
+      reloadCooldown: 4
+      projectileSpeed: 30
+      fireSound:
+        path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
+    - projectile: DHRocketStructuralRkt
+      fireRate: 0.8
+      magazineSize: 3
+      reloadCooldown: 6
+      projectileSpeed: 22
+      fireSound:
+        path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: Storage
+    grid:
+    - 0,0,8,3
+
+- type: entity
+  id: FlyingCraftScout
+  parent: BaseFlyingCraft
+  name: Scout
+  components:
+  - type: FlyingCraft
+    class: Scout
+    tier: 1
+    maxAngularSpeedBase: 14.7
+    tierSpeeds: [ 18, 24, 30, 35, 40 ] # fastest
+    baseDurability: 255 # scout base durability x0.75
+  - type: FlyingCraftFuel
+    fuel: 600
+    maxFuel: 600
+  - type: FlyingCraftWeapons
+    weapons:
+    - projectile: Bullet9x19mmFMJ
+      fireRate: 6
+      magazineSize: 40
+      reloadCooldown: 4
+      projectileSpeed: 28
+      fireSound:
+        path: /Audio/Weapons/Guns/Gunshots/smg.ogg
+  # Scout keeps the base storage (no x1.5).
+
+# ---------------- CIVILIAN variants (unarmed, ~tier-2 level; weaponise with a weapon board) ----------------
+# Hauler: bomber-referenced, biggest storage. Runner: scout-referenced, fastest. Both Civilian (no weapons).
+- type: entity
+  id: FlyingCraftCivilianHauler
+  parent: BaseFlyingCraft
+  name: civilian hauler
+  components:
+  - type: FlyingCraft
+    class: Bomber
+    tier: 2
+    civilian: true
+    civilianHeavy: true
+    maxAngularSpeedBase: 8.4
+    tierSpeeds: [ 5, 7, 9, 10, 12 ]
+    baseDurability: 1200
+  - type: FlyingCraftFuel
+    fuel: 1000
+    maxFuel: 1000
+  - type: Storage
+    grid:
+    - 0,0,11,5 # oversized cargo bay
+
+- type: entity
+  id: FlyingCraftCivilianRunner
+  parent: BaseFlyingCraft
+  name: civilian runner
+  components:
+  - type: FlyingCraft
+    class: Scout
+    tier: 2
+    civilian: true
+    civilianHeavy: false
+    maxAngularSpeedBase: 14.7
+    tierSpeeds: [ 18, 24, 30, 35, 40 ]
+    baseDurability: 255
+  - type: FlyingCraftFuel
+    fuel: 700
+    maxFuel: 700

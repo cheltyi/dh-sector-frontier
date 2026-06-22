@@ -1,0 +1,65 @@
+# Dark Haven - flying craft navigation lights. Tiny light-only child entities parented to the craft (an entity can
+# only carry one PointLight, so the two coloured nav lights live as separate children; the white headlight is the
+# craft's own PointLight). Ephemeral, no save, no sprite.
+- type: entity
+  id: FlyingCraftNavLight
+  abstract: true
+  save: false
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    castShadows: false
+    radius: 1.8
+    energy: 1.2
+    softness: 2
+
+- type: entity
+  parent: FlyingCraftNavLight
+  id: FlyingCraftNavLightPort
+  name: navigation light
+  suffix: port, green
+  components:
+  - type: PointLight
+    color: "#33ff66" # slightly green
+
+- type: entity
+  parent: FlyingCraftNavLight
+  id: FlyingCraftNavLightStarboard
+  name: navigation light
+  suffix: starboard, red
+  components:
+  - type: PointLight
+    color: "#ff3333" # red
+
+# Faint soft circle around the hull, toggled together with the directional headlight (no mask = omnidirectional glow).
+- type: entity
+  parent: FlyingCraftNavLight
+  id: FlyingCraftHeadlightGlow
+  name: headlight glow
+  suffix: soft circle
+  components:
+  - type: PointLight
+    enabled: false
+    castShadows: false
+    radius: 2
+    energy: 1.5
+    softness: 4
+    color: "#fff4e0"
+
+# Directional headlight beam (cone). Spawned as a child with LOCAL rotation 180deg so autoRot (child worldRot =
+# craft heading + 180) aims the cone FORWARD along the nose (+Y). Toggled together with the glow.
+- type: entity
+  parent: FlyingCraftNavLight
+  id: FlyingCraftHeadlightBeam
+  name: headlight beam
+  suffix: forward cone
+  components:
+  - type: PointLight
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 8
+    energy: 3.5
+    softness: 1
+    color: "#ffffff"
+    castShadows: true

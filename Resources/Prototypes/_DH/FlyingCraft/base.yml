@@ -1,0 +1,114 @@
+# Dark Haven - flying craft base (HYBRID object+grid, NOT a mech, NOT a grid).
+# A single Dynamic-body ENTITY that can rest ON a grid (hangar deck) and does NOT show as a grid blip, but flies
+# with grid-like physics via FlyingCraftSystem: real linear inertia (thrust = force toward the nose, capped at a
+# per-class top speed), real angular inertia (turning = torque, capped), and coast/decay from the body's damping.
+# The pilot sits INSIDE a container and drives with W/S = thrust, A/D = turn (or auto-aim toward the cursor in
+# combat mode). Flies at full speed everywhere (no on-grid slowdown — it would also trigger when flying OVER a
+# grid, since a 2D entity parents to the grid it is above). Placeholder sprite shared by all classes for now.
+- type: entity
+  id: BaseFlyingCraft
+  abstract: true
+  save: false # ephemeral like mechs -> persistence-clean (no fragile saved grids)
+  name: flying craft
+  description: A single-seat combat flyer.
+  components:
+  - type: Sprite
+    noRot: false # hull rotates with its physics heading (nose = sprite north)
+    drawdepth: Mobs
+    sprite: _DH/Objects/FlyingCraft/flyingcraft.rsi
+    layers:
+    - map: [ "enum.FlyingCraftVisualLayers.Hull" ]
+      state: base
+  - type: Appearance
+  - type: FlyingCraft
+  - type: FlyingCraftFuel
+  - type: FlyingCraftLights
+  # Sealed cockpit air so the pilot doesn't suffocate in space (closed O2/N2 loop, pre-filled ~1 atm).
+  - type: FlyingCraftAir
+    air:
+      volume: 200
+      temperature: 293.15
+      moles:
+        - 1.75 # Oxygen
+        - 6.55 # Nitrogen
+  # The toggleable directional headlight is a CHILD entity (FlyingCraftHeadlightBeam) spawned with a 180deg local
+  # rotation by FlyingCraftLightsSystem, NOT the craft's own PointLight: PointLight.Rotation is [Animatable]-only
+  # (not a DataField, not networked, write-locked to the engine), so a cone can't be aimed via YAML/server. Putting
+  # it on a child with local rotation PI makes autoRot point it forward along the nose.
+  # Dynamic body so thrust/torque give real inertia; low damping -> strong coast (use Space to brake).
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0.07 # only applies at rest; while flying the controller drives velocity directly
+    angularDamping: 2.0
+    fixedRotation: false
+    sleepingAllowed: false # never sleep -> always responds to the velocity-driven flight controller
+  # CRITICAL: without this the engine's TileFrictionController overwrites linearDamping every tick with tile friction
+  # (8x on a grid -> the craft crawls near any station). modifier 0 = frictionless; the controller owns velocity.
+  - type: TileFrictionModifier
+    modifier: 0
+  # Inverted-T ("⊥") footprint matching the sprite (3 wide x 2 tall): the whole bottom row + the top-centre cell.
+  # Two AABB fixtures (an AABB can't be an L/T shape on its own). Collides with grid walls and other craft.
+  - type: Fixtures
+    fixtures:
+      # Bottom row: full width, lower half.
+      fixBottom:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-1.0,1.5,0.0"
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+      # Nose: centre column, upper half.
+      fixNose:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,0.0,0.5,1.0"
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  # The pilot sits INSIDE the craft (hidden in the cockpit), not perched on top. Enter by dragging yourself onto
+  # the craft (a short "climbing in" DoAfter) or by activating it (E); leave via the granted action.
+  - type: ContainerContainer
+    containers:
+      flyingcraft-pilot: !type:ContainerSlot
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  # Repaired with a welder + materials (FlyingCraftRepairSystem): heals +100 hull, cost scales with tier.
+  - type: FlyingCraftRepair
+  # Upgrade/weaponise board slot (FlyingCraftTierSystem reads inserted boards via the FlyingCraftBoardSlot marker).
+  - type: FlyingCraftBoardSlot
+  - type: ItemSlots
+    slots:
+      flyingcraft-board:
+        name: flying-craft-board-slot
+        whitelist:
+          components:
+          - FlyingCraftUpgradeBoard
+          - FlyingCraftWeaponBoard
+  # Cargo bay (inventory). Default size; combat/civilian variants override the grid.
+  - type: Storage
+    grid:
+    - 0,0,7,2
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: InteractionOutline
+  - type: Clickable
+  - type: StaticPrice
+    price: 2000

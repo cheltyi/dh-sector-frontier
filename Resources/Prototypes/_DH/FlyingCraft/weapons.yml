@@ -1,0 +1,69 @@
+# Dark Haven - flying craft rocket explosions + projectiles.
+# Per the customer: the EXPLOSION itself carries the per-class damage flavor (Attacker = structural, Interceptor
+# = concussive/blunt), instead of plain explosive. Bomber just gets a much bigger blast.
+
+- type: explosion
+  id: DHRocketStructural
+  damagePerIntensity:
+    types:
+      Structural: 9
+      Piercing: 2
+  tileBreakChance: [0, 0.5, 1]
+  tileBreakIntensity: [0, 10, 30]
+  tileBreakRerollReduction: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+
+- type: explosion
+  id: DHRocketConcussive
+  damagePerIntensity:
+    types:
+      Blunt: 8
+      Heat: 2
+  tileBreakChance: [0, 0.5, 1]
+  tileBreakIntensity: [0, 10, 30]
+  tileBreakRerollReduction: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+
+# ---- rocket projectiles (clone the NF rocket, retune the blast per class) ----
+- type: entity
+  parent: NFBulletRocket
+  id: DHRocketHeavy # Bomber: bigger reserve + MUCH higher damage
+  name: heavy rocket
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 60
+    intensitySlope: 8
+    totalIntensity: 600
+    maxTileBreak: 3
+
+- type: entity
+  parent: NFBulletRocket
+  id: DHRocketStructuralRkt # Attacker: fewer rockets, MORE structural
+  name: structural rocket
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Explosive
+    explosionType: DHRocketStructural
+    maxIntensity: 40
+    intensitySlope: 6
+    totalIntensity: 280
+    maxTileBreak: 2
+
+- type: entity
+  parent: NFBulletRocket
+  id: DHRocketConcussiveRkt # Interceptor: less structural, more blunt
+  name: concussive rocket
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Explosive
+    explosionType: DHRocketConcussive
+    maxIntensity: 35
+    intensitySlope: 6
+    totalIntensity: 200
+    maxTileBreak: 1

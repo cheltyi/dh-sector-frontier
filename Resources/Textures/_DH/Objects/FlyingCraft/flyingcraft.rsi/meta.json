@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "AGPL-3.0-or-later",
+  "copyright": "Dark Haven - placeholder flying-craft sprite (96x64, nose north), to be replaced/recolored by spriters per class/tier.",
+  "size": {
+    "x": 96,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "fly",
+      "delays": [
+        [0.12, 0.12, 0.12, 0.12]
+      ]
+    },
+    {
+      "name": "shoot",
+      "delays": [
+        [0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
+      ]
+    }
+  ]
+}

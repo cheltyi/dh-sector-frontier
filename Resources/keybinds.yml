@@ -69,6 +69,20 @@ binds:
 - function: ShuttleBrake
   type: State
   key: Space
+# Dark Haven - flying craft brake (Space, human context). Higher priority so it wins over Arcade1 on Space.
+- function: FlyingCraftBrake
+  type: State
+  key: Space
+  priority: 1
+# Dark Haven - flying craft manual rotate (Q/E, human context). priority 1 beats Drop(Q)/ActivateItemInWorld(E).
+- function: FlyingCraftRotateLeft
+  type: State
+  key: Q
+  priority: 1
+- function: FlyingCraftRotateRight
+  type: State
+  key: E
+  priority: 1
 # Camera
 - function: CameraRotateLeft
   type: State
