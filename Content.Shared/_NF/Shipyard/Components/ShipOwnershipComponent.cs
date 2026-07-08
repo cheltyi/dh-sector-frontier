@@ -22,6 +22,9 @@ public sealed partial class ShipOwnershipComponent : Component
     public TimeSpan LastStatusChangeTime;
 
     [DataField, AutoNetworkedField]
+    public bool IsDeletionTimerRunning;
+
+    [DataField, AutoNetworkedField]
     public bool IsDeletionTimerPaused;
 
     [DataField, AutoNetworkedField]

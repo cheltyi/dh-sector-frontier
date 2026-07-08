@@ -210,8 +210,7 @@ public sealed partial class StarmapSystem : SharedStarmapSystem
                 var idToStarIndex = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
                 foreach (var def in data.Stars)
                 {
-                    var mainSectors = new[] { "TypanSector", "PirateSector", "MercenarySector", "PrisonSector" }; //DH PrisonSector
-                    foreach (var sectorId in mainSectors)
+                    for (var i = 0; i < n; i++)
                     {
                         if (Vector2.Distance(stars[i].Position, def.Position) < 0.1f)
                         {

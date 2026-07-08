@@ -59,7 +59,7 @@
 
 - type: entity
   id: ShellShotgunBibis
-  parent: ShellShotgun
+  parent: NFShellShotgunBuckshot #ShellShotgun
   name: shell (Bibis)
   suffix: ADT
   components:

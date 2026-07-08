@@ -3,6 +3,7 @@
 // See AGPLv3.txt for details.
 
 using Robust.Shared.Prototypes;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 

@@ -154,6 +154,21 @@ public sealed class SectorSystem : EntitySystem
         return false;
     }
 
+    public bool TryGetSectorConfig(MapId mapId, out StarDefinition config)
+    {
+        foreach (var inst in _instances.Values)
+        {
+            if (inst.MapId == mapId)
+            {
+                config = inst.Config;
+                return true;
+            }
+        }
+
+        config = default!;
+        return false;
+    }
+
     /// <summary>
     /// Lua persistence: re-register a sector map that was restored from the whole-world save (loaded via
     /// generic deserialization, which bypasses <see cref="EnsureSector"/>). Does only the non-map-creating
@@ -168,9 +183,15 @@ public sealed class SectorSystem : EntitySystem
     {
         if (_instances.ContainsKey(configId))
             return false;
-        if (!_protos.TryIndex<SectorSystemPrototype>(configId, out var cfg))
+        var cfg = FindStar(configId);
+        if (cfg == null)
         {
             Log.Error($"[SectorSystem] RestoreSectorInstance: config '{configId}' not found");
+            return false;
+        }
+        if (string.IsNullOrEmpty(cfg.Station))
+        {
+            Log.Error($"[SectorSystem] RestoreSectorInstance: config '{configId}' has no station defined");
             return false;
         }
 

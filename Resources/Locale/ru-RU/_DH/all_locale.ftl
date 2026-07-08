@@ -168,8 +168,6 @@ ent-MechEquipmentFork = усиленные приводы
 ent-BaseCrateStorageRack = стеллаж для хранения ящиков
     .desc = Как полка, только больше!
 
-ent-CrateStorageRack = стеллаж для хранения ящиков
-    .desc = Как полка, только больше!
 ent-CrateStorageRackBase = основание стеллажа для хранения ящиков
     .desc = Все стеллажи начинаются со скромного начала.
 ent-CrateStorageRackFrameEmpty = { ent-BaseCrateStorageRack }
@@ -216,8 +214,6 @@ ent-ClothingBeltOmni = пояс скафандра "Omni"
 ent-ClothingHeadHelmetHardsuitOmni = шлем скафандра "Omni"
     .desc = Оборудован по последнему слову техники в мире передовых шлемов. Встроенное ночное зрение, визор ID карт и подушка для шеи.
 
-
-ent-DeathRattleImplantCentcomm = имплант Предсмертный хрип ЦК
 ent-RadioImplantCentcomm = имплант Радио ЦК
 ent-FakeMindShieldImplant = поддельный имплант Щит разума
 
@@ -422,7 +418,7 @@ ent-BLES = БМЭС
     .desc = Блюспейс Магнитная Энергонакопительная Станция (БМЭС).
 
 ent-HandheldSecurityMonitor = портативный монитор камер
-    .desc = Монитор камер наблюдения. Вы наблюдаете за ними. Возможно.
+    .desc = Портативная консоль, которая имеет доступ к сети станционных камер.
 
 ent-AirAlarmFreezer = { ent-AirAlarm }
     .desc = { ent-AirAlarm.desc }
@@ -1123,8 +1119,6 @@ ent-HighSecEngineeringLocked = { ent-HighSecDoor }
 
 ent-RespironCanister = канистра респирона
     .desc = Канистра, в которой может содержаться газ любого вида. В этой, предположительно, содержится респирон. Можно прикрепить к порту коннектора с помощью гаечного ключа.
-ent-DeviceDesynchronizer = Десинхронизатор
-    .desc = Экспериментальное устройство, способное временно десинхронизировать пользователя с пространством-временем, фактически заставляя его исчезнуть, пока устройство активно. Прекрасно подходит для избегания попаданий корабельных орудий в пользователя.
 
 changelog-tab-title-DH = DarkHaven
 ent-NFMailBag = почтовый мешок
@@ -1157,7 +1151,7 @@ ent-AirlockExternalCommandLocked = { ent-AirlockExternal }
     .desc = { ent-AirlockExternal.desc }
 ent-AirlockExternalGlassCommandLocked = { ent-AirlockExternalGlass }
     .suffix = Внешний, Стеклянный, Командование, Закрыт
-    .desc = { ent-AirlockExternalGlass.desc }    
+    .desc = { ent-AirlockExternalGlass.desc }
 ent-AirlockMaintKitchenHydroLocked = { ent-AirlockMaintServiceLocked }
     .suffix = Кухня/Гидропоника, Закрыт
     .desc = { ent-AirlockMaintServiceLocked.desc }
@@ -1216,10 +1210,10 @@ tiles-lattice-left-upper = угловая решётка, лево-верх
 tiles-lattice-left-lower = угловая решётка, лево-низ
 tiles-lattice-right-upper = угловая решётка, право-верх
 tiles-lattice-right-lower = угловая решётка, право-низ
-adt-tiles-digital-floor = цифровой пол 
-adt-tiles-digital-off-floor = выключенный цифровой пол 
-adt-tiles-digital-red-floor = красный цифровой пол 
-adt-tiles-digital-blue-floor = синий цифровой пол 
+adt-tiles-digital-floor = цифровой пол
+adt-tiles-digital-off-floor = выключенный цифровой пол
+adt-tiles-digital-red-floor = красный цифровой пол
+adt-tiles-digital-blue-floor = синий цифровой пол
 
 ent-FloorTileItemWoodParquet = деревянный паркет
     .desc = { ent-FloorTileItemBase.desc }
@@ -1289,23 +1283,6 @@ tiles-old-concrete-outside = наружный старый бетонный по
 tiles-old-concrete-outside-slab = наружная старая бетонная плита
 tiles-old-concrete-outside-smooth = наружный старый гладкий бетонный пол
 
-ent-ADTBriefcaseCentcomm = чемодан ЦентКома
-    .desc = Роскошный и сверхпрочный чемодан с символикой NanoTrasen. Предназначен для очень важных людей с очень важными бумагами.
-    .suffix = ЦентКом
-
-ent-TapeRecorderTranscript = транскрипция записи
-
-ent-ADTBoxFolderDV = чёрно-оранжевая папка
-    .desc = Папка выполненый под стиль Dar-Vaxed.
-    .suffix = ДВ
-
-ent-ADTBoxFolderClipboardDV = планшет Dar-Vaxed
-    .desc = Стильный планшет, обитый чёрной кожей. Сотрудники Dar-Vaxed часто носят, но редко используют.
-    .suffix = ДВ
-
-ent-ADTPaperPack = упаковка бумаги
-    .desc = Упаковка бумаги, содержащая десять листов формата А4. Радость бюрократа.
-
 book-printer-window-book-label = Носитель:
 book-printer-window-clear-button = Очистить
 book-printer-window-eject-button = Извлечь
@@ -1326,11 +1303,6 @@ book-printer-book-name-blank = книга
 book-printer-book-description-blank = Простой бумажный носитель. Так и ждёт, чтобы его страницы наполнились смыслом.
 book-printer-unknown-name-blank = текстовый носитель
 book-printer-unknown-description-blank = Когда-то здесь был осмысленный текст. Теперь же, здесь лишь напоминание о нём.
-
-ent-ADTPaperCrane = бумажный журавлик
-    .desc = Аккуратная поделка в виде журавлика, сделанная из бумаги.
-ent-ADTPaperShip = бумажный кораблик
-    .desc = Незамысловатый бумажный кораблик. Не мочить!
 
 ent-ADTClothingHandsRabbitGloves = кроличьи перчатки
     .desc = Ох. Фурри.
@@ -1767,11 +1739,6 @@ ent-ADTClothingHeadTetoWig = парик Тето
 ent-ADTClothingUniformJumpsuitHawaiiShirt = гавайская рубашка
     .desc = Идеальный вариант для тех, кто должен выглядеть серьезно, но при этом не хочет скрывать свою жизнерадостную натуру. Производство компании "Modeling Agency Dar-Vaxed".
     .suffix = { "" }
-
-reagent-name-styptic-powder = Кровоостанавливающая пудра
-reagent-desc-styptic-powder = При нанесении на кожу заживляет травмы.
-reagent-name-silver-sulfadiazine = Сульфадиазин серебра
-reagent-desc-silver-sulfadiazine = При нанесении на кожу заживляет ожоги.
 
 NFWeaponRifleSniperHristov = { ent-WeaponSniperHristov }
     .desc = { ent-WeaponSniperHristov.desc }

@@ -83,21 +83,9 @@ public sealed class SectorStarMapSystem : EntitySystem
                 }
                 else
                 {
-                    var display = GetMapEntityName(typanMapId) ?? "Nordfall Sector";
-                    var star = new Star(position, typanMapId, display, Vector2.Zero);
-                    sectorStars.Add(star);
-                }
-            }
-
-            //DH PrisonSector
-            var prisonMapId = _sectorSystem.TryGetMapId("PrisonSector", out var prisonMap) ? prisonMap : MapId.Nullspace;
-            if (prisonMapId != MapId.Nullspace)
-            {
-                if (TryGetConfiguredPosition("PrisonSector", out var position))
-                {
-                    var display = GetMapEntityName(prisonMapId) ?? "Prison Sector";
-                    var star = new Star(position, prisonMapId, display, Vector2.Zero);
-                    sectorStars.Add(star);
+                    if (!_sectorSystem.TryGetMapId(def.Id, out var resolved))
+                        continue;
+                    mapId = resolved;
                 }
 
                 if (mapId == MapId.Nullspace) continue;
