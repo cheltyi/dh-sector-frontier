@@ -1,5 +1,6 @@
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.SmartFridge;
+using Robust.UnitTesting.Pool;
 
 namespace Content.IntegrationTests.Tests.SmartFridge;
 
@@ -50,7 +51,7 @@ public sealed class SmartFridgeInteractionTest : InteractionTest
 
         // smartfridge now has items
         Assert.That(component.Entries, Is.Not.Empty);
-        Assert.That(component.ContainedEntries[component.Entries[0]], Is.Not.Empty);
+        Assert.That(component.ContainedEntries[component.Entries[0].Name], Is.Not.Empty);
 
         // open the UI
         await Activate();
@@ -89,7 +90,7 @@ public sealed class SmartFridgeInteractionTest : InteractionTest
 
         // smartfridge now has one item only
         Assert.That(component.Entries, Is.Not.Empty);
-        Assert.That(component.ContainedEntries[component.Entries[0]].Count, Is.EqualTo(1));
+        Assert.That(component.ContainedEntries[component.Entries[0].Name].Count, Is.EqualTo(1));
     }
 
     [Test]
@@ -108,6 +109,6 @@ public sealed class SmartFridgeInteractionTest : InteractionTest
 
         // smartfridge now has N items
         Assert.That(component.Entries, Is.Not.Empty);
-        Assert.That(component.ContainedEntries[component.Entries[0]].Count, Is.EqualTo(SampleDumpableCount));
+        Assert.That(component.ContainedEntries[component.Entries[0].Name].Count, Is.EqualTo(SampleDumpableCount));
     }
 }

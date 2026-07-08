@@ -39,4 +39,7 @@ public sealed partial class HardsuitReanimationComponent : Component
     // reanimation cooldown is stuck after a restart.
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan LastReanimationTime = TimeSpan.Zero;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public MapCoordinates? SavedTeleportCoordinates;
 }

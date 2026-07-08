@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 261.2.0
+  engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 10/09/2025 22:15:12
-  entityCount: 1908
+  time: 03/13/2026 14:32:57
+  entityCount: 1900
 maps:
 - 1814
 grids:
@@ -294,7 +294,7 @@ entities:
             126: -20,1
     - type: OccluderTree
     - type: Shuttle
-      dampingModifier: 0.25
+      dampingModifier: 0.45
     - type: RadiationGridResistance
     - type: GravityShake
       shakeTimes: 10
@@ -1846,12 +1846,12 @@ entities:
   - uid: 920
     components:
     - type: Transform
-      pos: -4.293744,10.966518
+      pos: -4.293744,8.966518
       parent: 179
   - uid: 950
     components:
     - type: Transform
-      pos: -4.293744,10.966518
+      pos: -0.2937441,10.966518
       parent: 179
   - uid: 1564
     components:
@@ -3719,7 +3719,7 @@ entities:
   - uid: 70
     components:
     - type: Transform
-      pos: 9.6740055,21.752274
+      pos: 9.6740055,19.752274
       parent: 179
   - uid: 183
     components:
@@ -4338,6 +4338,16 @@ entities:
     - type: Transform
       pos: -3.25,-3.40625
       parent: 179
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        item: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: ClothingBeltUtilityFilled
   entities:
   - uid: 427
@@ -4345,11 +4355,31 @@ entities:
     - type: Transform
       pos: -1.895102,-10.33495
       parent: 179
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        item: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
   - uid: 428
     components:
     - type: Transform
       pos: -1.770102,-10.63182
       parent: 179
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        item: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: ClothingHandsGlovesColorYellow
   entities:
   - uid: 454
@@ -4709,7 +4739,7 @@ entities:
     - type: Transform
       pos: 1.5,-11.5
       parent: 179
-- proto: ComputerShipyardSyndicate
+- proto: ComputerShipyardTypan # Lua: ComputerShipyardSyndicate < ComputerShipyardTypan
   entities:
   - uid: 493
     components:
@@ -5100,8 +5130,9 @@ entities:
   - uid: 1344
     components:
     - type: Transform
-      pos: 18.5,14.5
-      parent: 179
+      pos: 20.5,16.5
+      parent: 1814
+    - type: SpaceDespawnTimer
 - proto: CrateScienceLabBundle
   entities:
   - uid: 1504
@@ -5388,8 +5419,11 @@ entities:
   - uid: 690
     components:
     - type: Transform
-      pos: 3.8231986,6.150942
+      pos: 5.8231983,4.150942
       parent: 179
+    - type: CollisionWake
+      enabled: False
+    - type: Conveyed
 - proto: DrinkShaker
   entities:
   - uid: 1562
@@ -5411,19 +5445,12 @@ entities:
     - type: Transform
       pos: -13.5713,5.4762487
       parent: 179
-- proto: EngineeringTechFab
-  entities:
-  - uid: 262
-    components:
-    - type: Transform
-      pos: -14.5,-7.5
-      parent: 179
 - proto: ExGrenade
   entities:
   - uid: 1583
     components:
     - type: Transform
-      pos: 0,-3.4375
+      pos: -2,-3.4375
       parent: 179
 - proto: ExosuitFabricator
   entities:
@@ -6716,7 +6743,7 @@ entities:
   - uid: 321
     components:
     - type: Transform
-      pos: 3.8440318,4.425983
+      pos: 3.8440318,2.425983
       parent: 179
 - proto: MercenaryTechFab
   entities:
@@ -6725,24 +6752,17 @@ entities:
     - type: Transform
       pos: -16.5,-5.5
       parent: 179
-- proto: MercenaryTechFabHacked
-  entities:
-  - uid: 1508
-    components:
-    - type: Transform
-      pos: -14.5,-5.5
-      parent: 179
 - proto: MicroManipulatorStockPart
   entities:
   - uid: 712
     components:
     - type: Transform
-      pos: -6.7434506,8.817795
+      pos: -4.7434506,8.817795
       parent: 179
   - uid: 959
     components:
     - type: Transform
-      pos: -4.752078,10.904018
+      pos: -4.752078,12.904018
       parent: 179
 - proto: MobileEmpGenerator
   entities:
@@ -6996,18 +7016,6 @@ entities:
     - type: Transform
       pos: -3.4306555,-1.0607564
       parent: 179
-- proto: NFWeaponPistolUniversalNfsd
-  entities:
-  - uid: 563
-    components:
-    - type: Transform
-      pos: -3.3837805,0.017368495
-      parent: 179
-  - uid: 1674
-    components:
-    - type: Transform
-      pos: -20.39548,0.66470706
-      parent: 179
 - proto: NFWeaponPistolViper
   entities:
   - uid: 1584
@@ -7053,6 +7061,20 @@ entities:
     - type: Transform
       pos: -20.5,4.5
       parent: 179
+    - type: ContainerContainer
+      containers:
+        ballistic-ammo: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        gun_magazine: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+        gun_chamber: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: NFWeaponSubMachineGunDrozd
   entities:
   - uid: 1217
@@ -7799,13 +7821,6 @@ entities:
     - type: Transform
       pos: 12.436131,12.550082
       parent: 179
-- proto: SalvageTechfabNF
-  entities:
-  - uid: 1390
-    components:
-    - type: Transform
-      pos: -11.5,-7.5
-      parent: 179
 - proto: ScrapOre
   entities:
   - uid: 1499
@@ -7978,13 +7993,6 @@ entities:
     - type: Transform
       pos: 2.5,17.5
       parent: 179
-- proto: ServiceTechFab
-  entities:
-  - uid: 1387
-    components:
-    - type: Transform
-      pos: -12.5,-7.5
-      parent: 179
 - proto: SheetBrass
   entities:
   - uid: 1843
@@ -8051,7 +8059,7 @@ entities:
   - uid: 960
     components:
     - type: Transform
-      pos: -3.981244,10.799851
+      pos: -1.9812441,12.799851
       parent: 179
 - proto: Sheetifier
   entities:

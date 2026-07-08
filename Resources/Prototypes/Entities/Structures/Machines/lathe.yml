@@ -54,9 +54,6 @@
     price: 800
   - type: ResearchClient
   - type: TechnologyDatabase
-  - type: MaterialStorageMagnetPickup # Frontier
-    range: 0.30 # Frontier
-    magnetEnabled: false
 
 # a lathe that can be sped up with space lube / slowed down with glue
 - type: entity
@@ -151,10 +148,9 @@
     - NFMedicalMobilityStatic # Frontier
     - NFServiceKitchenStatic # Frontier
     - NFEvaSuitCommon # Frontier
-
-  - type: EmagLatheRecipes
-    emagStaticPacks:
-    - NfsdAmmoStatic # Frontier: SecurityAmmoStatic<NfsdAmmoStatic
+#  - type: EmagLatheRecipes # comment from _Lua
+#    emagStaticPacks:
+#    - NfsdAmmoStatic # Frontier: SecurityAmmoStatic<NfsdAmmoStatic
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -169,6 +165,9 @@
     - blueprint
   - type: PirateBountyItem # Frontier
     id: Autolathe # Frontier
+  - type: MaterialStorageMagnetPickup # Lua
+    range: 0.30 # Frontier
+    magnetEnabled: false
 
 - type: entity
   id: AutolatheHyperConvection
@@ -218,7 +217,8 @@
     - NFChemistryBasicStatic # Frontier
     - NFSurgeryBasicStatic # Frontier
     dynamicPacks:
-    - LuaBluespaceArt # Lua
+    - LuaService # Lua
+    - LuaEngineering # Lua
     - NFSolarPack
     - AdvancedTools
     - ScienceEquipment
@@ -262,6 +262,9 @@
       machine_parts: !type:Container
       blueprint: !type:Container
   # End Frontier: accept blueprints
+  - type: MaterialStorageMagnetPickup # Lua
+    range: 0.30 # Frontier
+    magnetEnabled: false
 
 - type: entity
   id: ProtolatheHyperConvection
@@ -320,6 +323,7 @@
     - NFEngineeringBoards # Frontier
     - NFMedicalBoards # Frontier
     - NFServiceBoards # Frontier
+    - LuaMedicalBoards # Lua
   - type: EmagLatheRecipes
     emagDynamicPacks: [] # Frontier: empty list
     # - SecurityBoards # Frontier
@@ -443,7 +447,7 @@
 
 - type: entity
   id: SecurityTechFab
-  parent: BaseLatheLube
+  parent: [BaseLatheLube, BaseC3CentCommContraband] # Lua-changes : added BaseC3CentCommContraband
   name: security techfab
   description: Prints equipment for use by security crew.
   categories: [ HideSpawnMenu ] # Frontier
@@ -506,6 +510,7 @@
   parent: [NFBlueprintReceiverBase, BaseLatheLube] # Frontier: added NFBlueprintReceiverBase
   name: ammo techfab
   description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
+  suffix: Need balance test
   components:
     - type: Sprite
       sprite: Structures/Machines/techfab.rsi
@@ -527,11 +532,11 @@
       idleState: icon
       runningState: icon
       staticPacks:
-      - NfsdAmmoStatic # Frontier: SecurityAmmoStatic<NfsdAmmoStatic
-      - NFMercenaryMagazineStatic
-      - RMCAmmoPack
-      - N14AmmoPack
-      - MonoAmmoPack
+#      - NfsdAmmoStatic # Frontier: SecurityAmmoStatic<NfsdAmmoStatic
+#      - N14AmmoPack # comment (530-533) from _Lua
+#      - NFMercenaryMagazineStatic
+#      - RMCAmmoPack
+      - MonoAmmoPackModified #Lua MonoAmmoPack<MonoAmmoPackModified
     - type: MaterialStorage
       whitelist:
         tags:
@@ -771,6 +776,9 @@
     - type: PlaceableSurface # DeltaV: Allow ore bags to dump into it directly
       isPlaceable: false # but not place on it if you just click it with a random item
     - type: OreSiloClient # Frontier
+    - type: MaterialStorageMagnetPickup # Lua
+      range: 0.30 # Frontier
+      magnetEnabled: false
 
 - type: entity
   parent: OreProcessor

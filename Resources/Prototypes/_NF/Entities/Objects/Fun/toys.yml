@@ -92,6 +92,7 @@
     sprite: _NF/Objects/Fun/sharkminnow.rsi
     state: sharkminnowplush
   - type: Item
+    sprite: _NF/Objects/Fun/sharkminnow.rsi #Lua
     heldPrefix: sharkminnowplush
     inhandVisuals:
       left:
@@ -985,6 +986,24 @@
     containers:
       stash: !type:ContainerSlot {}
       ballistic-ammo: !type:Container {}
+  #Lua: added for fix price and error when building
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCloth1:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  #Lua end
 
 - type: entity
   id: BulletFoamRPG

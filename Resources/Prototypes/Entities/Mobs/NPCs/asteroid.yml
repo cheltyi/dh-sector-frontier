@@ -49,7 +49,7 @@
         Base: goliath_dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.00
-    baseSprintSpeed : 2.00
+    baseRunningSpeed : 2.00
   - type: Bloodstream
     bloodMaxVolume: 350
     chemicalMaxVolume: 0
@@ -95,8 +95,6 @@
       amount: 3
     - id: MaterialGoliathHide1
       amount: 1 #Lua 3<1
-  - type: TimedDespawn
-    lifetime: 2400
   - type: Reflect #Lua
     reflectProb: 0.2
 
@@ -213,7 +211,7 @@
         Base: hivelord_dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
-    baseSprintSpeed : 4.0
+    baseRunningSpeed : 4.0
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -253,8 +251,6 @@
   - type: Butcherable
     spawned:
     - id: FoodHivelordRemains
-  - type: TimedDespawn
-    lifetime: 2400
 
 - type: entity
   id: MobHivelordBrood
@@ -268,7 +264,7 @@
     - state: hivelordbrood
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
-    baseSprintSpeed : 4.0
+    baseRunningSpeed : 4.0
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -379,7 +375,7 @@
         Base: basilisk_dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
-    baseSprintSpeed : 3
+    baseRunningSpeed : 3
   - type: MobThresholds
     thresholds:
       0: Alive
