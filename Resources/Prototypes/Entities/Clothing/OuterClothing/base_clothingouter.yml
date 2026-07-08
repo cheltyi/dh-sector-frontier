@@ -30,6 +30,15 @@
   - type: StaticPrice # Frontier: setting base price to make material arbitrage happier
     price: 30 # Frontier
 
+# База только для космических скафандров (EVA, хардсьют, софтсьют)
+- type: entity
+  abstract: true
+  parent: ClothingOuterBase
+  id: SpaceOuterClothingBase
+  components:
+  - type: HideInnerClothing
+  - type: RequiresHyposprayDelay
+
 - type: entity
   abstract: true
   parent: ClothingOuterBase
@@ -122,7 +131,7 @@
 
 - type: entity
   abstract: true
-  parent: [RecyclableItemClothHardsuit, ClothingOuterBase, GeigerCounterClothing, AllowSuitStorageClothing] # Frontier: added RecyclableItemClothHardsuit
+  parent: [RecyclableItemClothHardsuit, SpaceOuterClothingBase, GeigerCounterClothing, AllowSuitStorageClothing] # Frontier: added RecyclableItemClothHardsuit
   id: ClothingOuterHardsuitBase
   name: base hardsuit
   components:
@@ -154,7 +163,6 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
-      beakerSlot: !type:ContainerSlot # Lua - imperial hardsuit injection
   - type: GroupExamine
   - type: Tag
     tags:
@@ -194,20 +202,10 @@
   - type: StaticPrice # Frontier
     price: 20 # Frontier
     vendPrice: 1500 # Frontier
-  - type: Inject # lua - imperial hardsuit injection
-    openCloseDelay: 1.5
-    autoClose: true
-    autoCloseDelay: 6
-  - type: ItemSlots # lua - imperial hardsuit injection
-    slots: # lua - imperial hardsuit injection
-      beakerSlot: # lua - imperial hardsuit injection
-        whitelist: # lua - imperial hardsuit injection
-          tags: # lua - imperial hardsuit injection
-          - FitsHardsuit # Lua - imperial hardsuit injection
 
 - type: entity
   abstract: true
-  parent: [ClothingOuterBase, AllowSuitStorageClothing]
+  parent: [SpaceOuterClothingBase, AllowSuitStorageClothing]
   id: ClothingOuterEVASuitBase
   name: base EVA Suit
   components:

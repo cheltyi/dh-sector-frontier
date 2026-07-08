@@ -1,3 +1,4 @@
+using Content.Shared._NF.Bank;
 using System.Numerics;
 using Content.Server.Cargo.Systems;
 using Robust.Server.GameObjects;
@@ -182,6 +183,7 @@ public sealed class BluespaceErrorRule : StationEventSystem<BluespaceErrorRuleCo
                 if (s.Map == MapId.Nullspace) continue;
                 if (exclude.Contains(s.Map)) continue;
                 if (!_map.MapExists(s.Map)) continue;
+                if (_sectors.TryGetSectorConfig(s.Map, out var cfg) && !cfg.BluespaceEventsEnabled) continue;
                 candidates.Add(s.Map);
             }
             if (candidates.Count == 0) return null;

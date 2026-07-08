@@ -41,6 +41,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
+  conditions:
+  - !type:NoUnstackableInTile
+  - !type:WallmountCondition {}
 
 - type: construction
   id: CableTerminal
@@ -61,6 +64,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
+  conditions:
+  - !type:NoUnstackableInTile
+  - !type:WallmountCondition {}
 
 - type: construction
   hide: true # Frontier
@@ -242,6 +248,7 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition {}
+  - !type:NoUnstackableInTile
 
 - type: construction
   id: FireAlarm
@@ -522,6 +529,7 @@
 
 - type: construction
   id: GasPipeManifold
+  name: construction-recipe-gas-pipe-manifold
   graph: GasPipe
   startNode: start
   targetNode: manifold

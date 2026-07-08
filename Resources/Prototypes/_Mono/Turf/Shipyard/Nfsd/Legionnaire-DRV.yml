@@ -1,7 +1,7 @@
 # Ship by Starch
 # Minor edits by Redrover
 
-# Lua remake by fox76055
+# Don`t use (need remap)
 
 - type: vessel
   id: Legionnaire-DRV
@@ -25,21 +25,21 @@
   engine:
   - Uranium
 
-- type: gameMap
-  id: Legionnaire-DRV
-  mapName: 'Legionnaire'
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/Legionnaire-DRV.yml
-  minPlayers: 0
-  stations:
-    Legionnaire-DRV:
-      stationProto: StandardFrontierSecurityVessel
-      components:
-      - type: StationNameSetup
-        mapNameTemplate: 'Legionnaire {1}'
-        nameGenerator:
-          !type:NanotrasenNameGenerator
-          prefixCreator: '14'
-      - type: StationJobs
-        availableJobs:
-          Deputy: [ 0, 0 ]
+# - type: gameMap
+#   id: Legionnaire-DRV
+#   mapName: 'Legionnaire'
+#   mapPath: /Maps/_Mono/Shuttles/Nfsd/Legionnaire-DRV.yml
+#   minPlayers: 0
+#   stations:
+#     Legionnaire-DRV:
+#       stationProto: StandardFrontierSecurityVessel
+#       components:
+#       - type: StationNameSetup
+#         mapNameTemplate: 'Legionnaire {1}'
+#         nameGenerator:
+#           !type:NanotrasenNameGenerator
+#           prefixCreator: '14'
+#       - type: StationJobs
+#         availableJobs:
+#           Deputy: [ 0, 0 ]
 

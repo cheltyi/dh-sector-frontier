@@ -1,3 +1,4 @@
+
 chat-radio-vip = Вип
 
 ent-EncryptionKeyVip = ключ шифрования канала вип
@@ -6,7 +7,7 @@ ent-ClothingHeadsetAltVip = полноразмерная гарнитура Ви
     .desc = Модифицированный модульный интерком, надеваемый на голову. Принимает ключи шифрования.
 ent-ClothingHeadsetAltVipSyndicate = {ent-ClothingHeadsetAltVip}
     .desc = {ent-ClothingHeadsetAltVip.desc}
-ent-VipPDA = КПК вип авантюриста
+ent-VipPDA = КПК Акционера
     .desc = Почему он не серый?
 ent-VipIDCard = ID карта (Вип)
     .desc = Карта, необходимая для доступа в различные области станции.
@@ -16,13 +17,6 @@ job-description-vip = Элитный пассажир-акционер, поль
 
 job-description-outpost-syndicate-shareholder = Акционер Нордфолла, пользующийся особым расположением Синдиката.
 
-ent-BaseVipUplinkRadioVip = аплинк випа
-    .desc = Старое радио в стиле ретро... Но почему-то черное.. и.. с золтом?
-    .suffix = Вип
-ent-BaseVipUplinkRadioDebug = { ent-BaseVipUplinkRadioVip }
-    .desc =  { ent-BaseVipUplinkRadioVip.desc }
-    .suffix = Вип, Дебаг
-
 ent-ClothingNeckCloakNanotrasenVip = плащ випа
     .desc = Выдается лучшим из лучших
 
@@ -31,6 +25,12 @@ ent-WeaponSubMachineGunVectorLegal = легальный вектор
 
 ent-EnergySwordDoubleLegal = легальный двухклинковый энергетический меч
     .desc = NanoTrasen разобрала склад контрабанды и легализовала некоторые мечи для вип. Его можно хранить в кармане.
+
+store-vip-tier-shareholder = Акционер
+store-vip-tier-god = Божество
+store-vip-tier-rank1 = Ранг I
+store-vip-tier-rank2 = Ранг II
+store-vip-tier-rank3 = Ранг III
 
 store-vip-category-flatpack = упаковки
 store-vip-category-crates = ящики
@@ -81,6 +81,8 @@ uplink-vip-medkit-desc = Продвинутый набор для оказани
 
 uplink-vip-Hypospray-name = гипоспрей
 uplink-vip-Hypospray-desc = Стерильный инъектор для быстрого введения лекарств пациентам.
+uplink-vip-VipJetInjector-name = премиум джет-инъектор
+uplink-vip-VipJetInjector-desc = Премиальный продвинутый джет-инъектор с емкостью 10u.
 
 uplink-vip-Demag-name = криптографический ресеквенсор
 uplink-vip-Demag-desc = Универсальное решение после взлома. Восстанавливает шлюзы. Культовое средство для устранения неполадок после взломов.
@@ -423,14 +425,8 @@ uplink-vip-CardBoxBlack-desc = { ent-CardBoxBlack }
 uplink-vip-MpplayerDefault-name = { ent-MpplayerDefault }
 uplink-vip-MpplayerDefault-desc = { ent-MpplayerDefault.desc }
 
-uplink-vip-MpplayerBoich-name = { ent-MpplayerBoich }
-uplink-vip-MpplayerBoich-desc = { ent-MpplayerBoich.desc }
-
-uplink-vip-Mpplayer-name = { ent-Mpplayer }
-uplink-vip-Mpplayer-desc = { ent-Mpplayer.desc }
-
-uplink-vip-MpplayerNetscape-name = { ent-MpplayerNetscape }
-uplink-vip-MpplayerNetscape-desc = { ent-MpplayerNetscape.desc }
+uplink-vip-SponsorMusicPlayer-name = { ent-SponsorMusicPlayer }
+uplink-vip-SponsorMusicPlayer-desc = { ent-SponsorMusicPlayer.desc }
 
 uplink-vip-CrateCargoGambling-name = { ent-CrateCargoGambling }
 uplink-vip-CrateCargoGambling-desc = { ent-CrateCargoGambling.desc }
@@ -515,14 +511,8 @@ uplink-vip-MachineWarpDriveFlatpack-desc = { ent-MachineWarpDriveFlatpack.desc }
 ent-MpplayerDefault = портативный плеер
     .desc = Небольшой портативный музыкальный плеер.
 
-ent-MpplayerBoich = портативный плеер Боича
-    .desc = Небольшой портативный музыкальный плеер с особым плейлистом.
-
-ent-Mpplayer = портативный плеер Луа
-    .desc = Небольшой портативный музыкальный плеер старой модели.
-
-ent-MpplayerNetscape = портативный плеер Нетскейпа
-    .desc = Плеер с интерфейсом в стиле старых браузеров.
+ent-SponsorMusicPlayer = плеер
+    .desc = Особый плеер с личной музыкой.
 
 ent-ClothingUniformLatexLovedmaid = латексный наряд горничной
     .desc = Обтягивающий латексный костюм горничной для особых случаев.

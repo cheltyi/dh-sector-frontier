@@ -56,6 +56,7 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenTileSpawnWindow = "OpenTileSpawnWindow";
         public static readonly BoundKeyFunction OpenDecalSpawnWindow = "OpenDecalSpawnWindow";
         public static readonly BoundKeyFunction OpenAdminMenu = "OpenAdminMenu";
+        public static readonly BoundKeyFunction OpenChunkMonitor = "OpenChunkMonitor";
         public static readonly BoundKeyFunction TakeScreenshot = "TakeScreenshot";
         public static readonly BoundKeyFunction TakeScreenshotNoUI = "TakeScreenshotNoUI";
         public static readonly BoundKeyFunction ToggleFullscreen = "ToggleFullscreen";
@@ -64,6 +65,8 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction ZoomIn = "ZoomIn";
         public static readonly BoundKeyFunction ResetZoom = "ResetZoom";
         public static readonly BoundKeyFunction ToggleStanding = "ToggleStanding"; // WD EDIT
+        public static readonly BoundKeyFunction LookUp = "LookUp"; // Lua
+        public static readonly BoundKeyFunction ToggleWalk = "ToggleWalk";
 
         public static readonly BoundKeyFunction ArcadeUp = "ArcadeUp";
         public static readonly BoundKeyFunction ArcadeDown = "ArcadeDown";
@@ -111,6 +114,7 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction HotbarShift9 = "HotbarShift9";
         public static readonly BoundKeyFunction OpenLanguageMenu = "OpenLanguageMenu"; // Lua
         public static readonly BoundKeyFunction OpenCompanyFactionsMenu = "OpenCompanyFactionsMenu"; // Lua
+        public static readonly BoundKeyFunction OpenDonateShopMenu = "OpenDonateShopMenu";
 
         public static BoundKeyFunction[] GetHotbarBoundKeys() =>
             new[]

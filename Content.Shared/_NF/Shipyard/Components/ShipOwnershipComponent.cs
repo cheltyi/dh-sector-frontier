@@ -10,9 +10,6 @@ namespace Content.Shared._NF.Shipyard.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class ShipOwnershipComponent : Component
 {
-    /// <summary>
-    /// The owner's player session ID
-    /// </summary>
     [DataField, AutoNetworkedField]
     public NetUserId OwnerUserId;
 
@@ -24,15 +21,18 @@ public sealed partial class ShipOwnershipComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan LastStatusChangeTime;
 
-    /// <summary>
-    /// Whether the owner is currently online
-    /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IsOwnerOnline;
+    public bool IsDeletionTimerRunning;
 
-    /// <summary>
-    /// How long to wait after the owner disconnects before deleting their ship (in seconds)
-    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IsDeletionTimerPaused;
+
+    [DataField, AutoNetworkedField]
+    public TimeSpan DeletionTimerStartTime;
+
+    [DataField, AutoNetworkedField]
+    public TimeSpan AccumulatedUnpoweredTime;
+
     [DataField]
-    public float DeletionTimeoutSeconds = 7200; // 2 hours
+    public float DeletionTimeoutSeconds = 7200;
 }

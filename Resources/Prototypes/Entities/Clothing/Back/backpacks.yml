@@ -36,6 +36,9 @@
         volume: -11
   # Goobstation edit end
   - type: Storage
+    blacklist: #Lua
+      tags:
+      - Webbing
     grid:
     - 0,0,6,3
     maxItemSize: Huge
@@ -293,10 +296,13 @@
     - type: Storage
       grid:
       - 0,0,7,6
+    - type: Tag
+      tags:
+      - ClothMade
 
 #Syndicate
 - type: entity
-  parent: [NFClothingBackpack, BaseC3SyndicateContraband] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, ClothingBackpack<NFClothingBackpack
+  parent: [NFClothingBackpack, BaseC1SyndicateContraband] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, ClothingBackpack<NFClothingBackpack # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContraband
   id: ClothingBackpackSyndicate
   name: syndicate backpack
   description:

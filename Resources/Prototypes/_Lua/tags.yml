@@ -3,6 +3,9 @@
 # See AGPLv3.txt for details.
 
 - type: Tag
+  id: Webbing
+
+- type: Tag
   id: PurspaceManupulator
 
 - type: Tag
@@ -19,6 +22,9 @@
 
 - type: Tag
   id: MedipenLathe
+
+- type: Tag
+  id: BlueprintAncientCircuitImprinter
 
 - type: Tag
   id: Shrimp
@@ -157,3 +163,9 @@
 
 - type: Tag
   id: NFFinanceIssuanceConsole
+
+- type: Tag
+  id: DontReopenRole
+
+- type: Tag
+  id: WaterRegenerator

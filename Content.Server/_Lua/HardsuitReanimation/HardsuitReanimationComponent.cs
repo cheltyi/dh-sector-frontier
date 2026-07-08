@@ -3,6 +3,7 @@
 // See AGPLv3.txt for details.
 
 using Robust.Shared.Prototypes;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -39,4 +40,7 @@ public sealed partial class HardsuitReanimationComponent : Component
     // reanimation cooldown is stuck after a restart.
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan LastReanimationTime = TimeSpan.Zero;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public MapCoordinates? SavedTeleportCoordinates;
 }

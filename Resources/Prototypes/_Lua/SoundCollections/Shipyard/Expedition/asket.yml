@@ -1,7 +1,7 @@
-# LuaWorld - This file is licensed under AGPLv3
-# Copyright (c) 2025 LuaWorld Contributors
-# See AGPLv3.txt for details.
-# Author discord - germanreutt
+# # LuaWorld - This file is licensed under AGPLv3
+# # Copyright (c) 2025 LuaWorld Contributors
+# # See AGPLv3.txt for details.
+# # Author discord - germanreutt
 
 - type: vessel
   parent: BaseVessel
@@ -21,17 +21,17 @@
   engine:
   - AME
 
-- type: gameMap
-  id: GFAsket
-  mapName: 'Asket'
-  mapPath: /Maps/_Lua/Shuttles/Expedition/asket.yml
-  minPlayers: 0
-  stations:
-    GFAsket:
-      stationProto: StandardFrontierExpeditionVessel
-      components:
-        - type: StationNameSetup
-          mapNameTemplate: 'Asket {1}'
-          nameGenerator:
-            !type:NanotrasenNameGenerator
-            prefixCreator: '14'
+# - type: gameMap
+#   id: GFAsket
+#   mapName: 'Asket'
+#   mapPath: /Maps/_Lua/Shuttles/Expedition/asket.yml
+#   minPlayers: 0
+#   stations:
+#     GFAsket:
+#       stationProto: StandardFrontierExpeditionVessel
+#       components:
+#         - type: StationNameSetup
+#           mapNameTemplate: 'Asket {1}'
+#           nameGenerator:
+#             !type:NanotrasenNameGenerator
+#             prefixCreator: '14'

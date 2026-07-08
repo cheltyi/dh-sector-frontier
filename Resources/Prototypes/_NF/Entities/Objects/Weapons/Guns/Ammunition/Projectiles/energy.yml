@@ -9,7 +9,8 @@
     impactEffect: BulletImpactEffectOrangeDisabler
     damage:
       types:
-        Heat: 16 #Lua 8<16
+        Shock: 17.5
+        Caustic: 7.5
 
 # Assault Rifles / Carbines
 - type: entity
@@ -124,7 +125,6 @@
     color: white
     energy: 0.5
   - type: GatheringProjectile
-  - type: MiningGatheringSoft
 
 - type: entity
   id: NFBulletKineticMediumPower
@@ -159,4 +159,3 @@
         Structural: 30
   - type: PointLight
     color: "#ffffff"
-  - type: MiningGatheringHard

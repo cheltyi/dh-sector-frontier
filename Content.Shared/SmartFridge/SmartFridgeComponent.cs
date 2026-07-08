@@ -47,7 +47,7 @@ public sealed partial class SmartFridgeComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     [Access(typeof(SmartFridgeSystem), Other = AccessPermissions.ReadExecute)]
-    public Dictionary<SmartFridgeEntry, HashSet<NetEntity>> ContainedEntries = new();
+    public Dictionary<string, HashSet<NetEntity>> ContainedEntries = new();
 
     /// <summary>
     /// The flavour text displayed at the bottom of the SmartFridge's UI
@@ -90,7 +90,7 @@ public sealed partial class SmartFridgeComponent : Component
 }
 
 [Serializable, NetSerializable, DataRecord]
-public record struct SmartFridgeEntry
+public partial record struct SmartFridgeEntry
 {
     public string Name;
 
